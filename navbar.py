@@ -19,9 +19,9 @@ navbar = html.Nav(
     [
         html.A('Interaktivní dashboard', href="/",
                className="nav-button"),
-        html.A('Online Spotřební Koš', href="/dash/gems",
+        html.A('Online Spotřební Koš', href="/kos",
                className="nav-button"),
-        html.A('Zajímavosti', href="/dash/battles",
+        html.A('Zajímavosti', href="/zajimavosti",
                className="nav-button"),
     ], className="navbar"
 )
