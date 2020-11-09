@@ -7,7 +7,7 @@ from app import app
 
 sys.path.append("..") # Adds higher directory to python modules path.
 
-from graphs.rohlik_products import graph as graph1
+from graphs.itesco_main_category import graph as graph1
 from navbar import layout as navbar_layout
 
 

@@ -27,15 +27,15 @@ conn = snowflake.connector.connect(
 )
 
 try:
-    sql = 'select * from WORKSPACE_179647280."rohlik_test"'
+    sql = 'select * from WORKSPACE_179647280."itesco_spotrebni_kos_vyvoj_v1"'
     cursor = conn.cursor()
     cursor.execute(sql)
-    rohlik_df = pd.DataFrame.from_records(
+    itescoKosDf = pd.DataFrame.from_records(
         iter(cursor), columns=[x[0]for x in cursor.description])
     cursor.close()
 except Exception as e:
     print(e)
 
 # rohlik_df -> products
-rohlik_by_date = pd.DataFrame(
-    rohlik_df[['p_key', 'date']].groupby('date').count().sort_values('date'))
+itescoKosDf = pd.DataFrame(
+    itescoKosDf[['nazev_hlavni_kategorie','date','basePrice']].groupby(['nazev_hlavni_kategorie','date']).sum('basePrice').reset_index())

@@ -2,14 +2,14 @@ import dash_core_components as dcc
 import dash_html_components as html
 import datetime
 from datetime import datetime as dt
-from db_connection import rohlik_by_date
+from db_connection import itescoKosDf
 
 date_range_picker = html.Div(
     [   
         html.P('Select Date Range:'),
         dcc.DatePickerRange(
             id='date-picker-range',
-            start_date=rohlik_by_date.index.min(),
+            start_date=itescoKosDf['date'].min(),
             end_date=dt.now().date() - datetime.timedelta(days=1),
             clearable=True,
             display_format="MMM DD, YYYY",

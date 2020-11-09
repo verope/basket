@@ -2,6 +2,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+config.env
+.vscode/
+
 # requirements for snowflake connector
 requirements_37.txt
 
@@ -78,9 +81,6 @@ docs/_build/
 
 # PyBuilder
 target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
 
 # IPython
 profile_default/

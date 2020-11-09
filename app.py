@@ -34,5 +34,5 @@ def display_page(pathname):
 rc_rohlik_products_graph(app)
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port = 8080)
+    app.run_server(debug=True, host='127.0.0.1', port = 8050)
     # server debug does not work -> fix!

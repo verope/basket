@@ -12,7 +12,7 @@ page_logo = html.Div(
 
 page_title = html.Div(
     [
-        html.H1('Online Spotřební Koš')
+        html.H1('RINGLE <3 Online Spotřební Koš')
     ], className='page-title')
 
 navbar = html.Nav(
