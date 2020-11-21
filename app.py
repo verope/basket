@@ -7,8 +7,11 @@ import datetime
 import plotly.graph_objs as go
 
 app = dash.Dash(__name__) 
+
 server = app.server
+
 app.config.suppress_callback_exceptions = True
+# why are you here my friend?
 
 from apps import homepage
 from db_connection import conn
@@ -34,5 +37,6 @@ def display_page(pathname):
 rc_rohlik_products_graph(app)
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='127.0.0.1', port = 8050)
+    app.run_server(debug=True)
+    # , host='127.0.0.1', port = 8050
     # server debug does not work -> fix!
