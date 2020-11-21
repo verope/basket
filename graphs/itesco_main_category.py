@@ -24,15 +24,23 @@ itescoKosTraces = [go.Scatter(
 
 graph = html.Div(
     [
-        dcc.Graph(id='itesco-main-graph',
-                  figure={
-                      'data': itescoKosTraces,
-                      'layout': go.Layout(
-                          title=layout['chart'],
-                          xaxis=layout['xaxis'],
-                          yaxis=layout['yaxis']
-                      )
-                  }
+        dcc.Graph(
+            id='itesco-main-graph',
+            style={
+                'height':800
+                },
+            figure={
+                'data': itescoKosTraces,
+                'layout': go.Layout(
+                title=layout['chart'],
+                xaxis=layout['xaxis'],
+                yaxis=layout['yaxis'],
+                legend=dict(
+                    y=-2,
+                    yanchor="bottom"
+                    )
+                    )
+                    }
                   )
     ],
     className="graph-cell"
