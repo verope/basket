@@ -26,16 +26,33 @@ conn = snowflake.connector.connect(
     schema=SCHEMA
 )
 
+# DATA LOAD
+
 try:
     sql = 'select * from WORKSPACE_179647280."itesco_spotrebni_kos_vyvoj_v1"'
     cursor = conn.cursor()
     cursor.execute(sql)
-    itescoKosDf = pd.DataFrame.from_records(
+    itescoMainCatDf = pd.DataFrame.from_records(
         iter(cursor), columns=[x[0]for x in cursor.description])
     cursor.close()
 except Exception as e:
     print(e)
 
-# rohlik_df -> products
-itescoKosDf = pd.DataFrame(
-    itescoKosDf[['nazev_hlavni_kategorie','date','basePrice']].groupby(['nazev_hlavni_kategorie','date']).sum('basePrice').reset_index())
+try:
+    sql = 'select * from WORKSPACE_179647280."itesco_spotrebni_kos_vazena_suma"'
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    itescoWeightedDf = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+
+# DATA TRANSFORMATIONS
+
+itescoMainCatDf_g = pd.DataFrame(
+    itescoMainCatDf[['nazev_hlavni_kategorie','date','basePrice']].groupby(['nazev_hlavni_kategorie','date']).sum('basePrice').reset_index())
+
+# itescoWeightedDf
+itescoWeighted_s = itescoWeightedDf[['date','vazena_suma']].sort_values(by='date')

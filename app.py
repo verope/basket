@@ -15,7 +15,7 @@ app.config.suppress_callback_exceptions = True
 
 from apps import homepage
 from db_connection import conn
-from callbacks.callbacks_homepage import rc_rohlik_products_graph
+from callbacks.callbacks_homepage import rc_itesco_main_cat_graph, rc_itesco_weighted_evo_graph
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -34,7 +34,8 @@ def display_page(pathname):
     else:
         return '404'
 
-rc_rohlik_products_graph(app)
+rc_itesco_main_cat_graph(app)
+rc_itesco_weighted_evo_graph(app)
 
 if __name__ == '__main__':
     app.run_server(debug=True)

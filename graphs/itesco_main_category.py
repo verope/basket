@@ -5,7 +5,7 @@ import dash_html_components as html
 # from app import app
 from datetime import datetime as dt
 from dash.dependencies import Input, Output
-from db_connection import itescoKosDf
+from db_connection import itescoMainCatDf_g
 
 layout = {
     'chart': 'iTesco Spotrebni Kos',
@@ -14,13 +14,13 @@ layout = {
 }
 
 itescoKosTraces = [go.Scatter(
-    x=itescoKosDf[itescoKosDf['nazev_hlavni_kategorie']
+    x=itescoMainCatDf_g[itescoMainCatDf_g['nazev_hlavni_kategorie']
                   == mainCategory]['date'],
-    y=itescoKosDf[itescoKosDf['nazev_hlavni_kategorie']
+    y=itescoMainCatDf_g[itescoMainCatDf_g['nazev_hlavni_kategorie']
                   == mainCategory]['basePrice'],
     mode='lines',
     name=mainCategory
-) for mainCategory in itescoKosDf['nazev_hlavni_kategorie'].unique()]
+) for mainCategory in itescoMainCatDf_g['nazev_hlavni_kategorie'].unique()]
 
 graph = html.Div(
     [
