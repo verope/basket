@@ -6,8 +6,8 @@ import pandas as pd
 import pyarrow
 
 # !!! FOR LOCAL ENVIRONMENT
-# from dotenv import load_dotenv
-# load_dotenv('config.env')
+from dotenv import load_dotenv
+load_dotenv('config.env')
 
 DATABASE = os.getenv('DATABASE')
 PASSWORD = os.getenv('PASSWORD')
@@ -43,6 +43,36 @@ try:
     cursor = conn.cursor()
     cursor.execute(sql)
     itescoWeightedDf = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+try:
+    sql = 'select * from WORKSPACE_179647280."out_itesco_spotrebni_kos_sub_cat_agg"'
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    itescoSubCatDf = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+try:
+    sql = 'select * from WORKSPACE_179647280."out_itesco_spotrebni_kos_main_cat_agg"'
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    itescoMainCatDf_agg = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+try:
+    sql = 'select * from WORKSPACE_179647280."out_itesco_spotrebni_kos_product_agg"'
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    itescoProductDf = pd.DataFrame.from_records(
         iter(cursor), columns=[x[0]for x in cursor.description])
     cursor.close()
 except Exception as e:

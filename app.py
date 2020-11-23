@@ -5,21 +5,24 @@ from dash.dependencies import Input, Output
 from datetime import datetime as dt
 import datetime
 import plotly.graph_objs as go
+import dash_bootstrap_components as dbc
 
-app = dash.Dash(__name__) 
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-server = app.server
+# app = dash.Dash(__name__) 
+app.title = 'Online Spotřební Koš'
+# server = app.server
 
 app.config.suppress_callback_exceptions = True
 # why are you here my friend?
 
 from apps import homepage
 from db_connection import conn
-from callbacks.callbacks_homepage import rc_itesco_main_cat_graph, rc_itesco_weighted_evo_graph
+from callbacks.callbacks_homepage import rc_itesco_main_cat_graph, rc_itesco_weighted_evo_graph, rc_itesco_main_cat_graph2, rc_callback_hover_data, rc_itesco_drilldown_sub
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    html.Div(id='page-content')
+    html.Div(id='page-content'),
 ])
 
 @app.callback(Output('page-content', 'children'),
@@ -36,8 +39,11 @@ def display_page(pathname):
 
 rc_itesco_main_cat_graph(app)
 rc_itesco_weighted_evo_graph(app)
+rc_itesco_main_cat_graph2(app)
+rc_callback_hover_data(app)
+rc_itesco_drilldown_sub(app)
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, host='127.0.0.1', port = 8050)
     # , host='127.0.0.1', port = 8050
     # server debug does not work -> fix!
