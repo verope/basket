@@ -6,8 +6,6 @@ import plotly.express as px
 # from app import app
 from datetime import datetime as dt
 from dash.dependencies import Input, Output
-# from db_connection import itescoMainCatDf_g
-
 
 from db_connection import itescoMainCatDf_agg as df 
 
@@ -24,7 +22,7 @@ fig.update_layout({
 
 
 graph = html.Div(children = [
-    html.H2("ČSÚ hlavní kategorie"),
+    html.H2("iTesco: ČSÚ hlavní kategorie"),
     dcc.Graph(id="itesco-main-cat-graph-agg",
             figure=fig)
 ])
