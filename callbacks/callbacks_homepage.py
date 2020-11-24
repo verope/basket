@@ -1,9 +1,10 @@
-from graphs.itesco_main_category import layout as layout_itesco_main_cat
-from db_connection import itescoMainCatDf_g
+# from graphs.itesco_main_category import layout as layout_itesco_main_cat
+# from db_connection import itescoMainCatDf_g
 
 from graphs.itesco_weighted_evo import layout as layout_itesco_weighted_evo
 from db_connection import itescoWeighted_s
 from db_connection import itescoProductDf
+from db_connection import itescoMainCatDf_agg
 
 from datetime import datetime as dt
 import datetime
@@ -16,39 +17,74 @@ from app import app
 
 from db_connection import itescoSubCatDf
 
-def rc_itesco_main_cat_graph(app):
-    @app.callback(Output('itesco-main-graph', 'figure'),
-                  [Input('date-picker-range', 'start_date'),
-                   Input('date-picker-range', 'end_date')])
-    def callback_itesco_main_cat_graph(start_date, end_date):
+# def rc_itesco_main_cat_graph(app):
+#     @app.callback(Output('itesco-main-graph', 'figure'),
+#                   [Input('date-picker-range', 'start_date'),
+#                    Input('date-picker-range', 'end_date')])
+#     def callback_itesco_main_cat_graph(start_date, end_date):
+#         if start_date is not None:
+#             start_date = dt.strptime(start_date, '%Y-%m-%d').date()
+#         if end_date is not None:
+#             end_date = dt.strptime(end_date, '%Y-%m-%d').date()
+#         if start_date is not None and end_date is not None:
+#             figure = {'data': [go.Scatter(x=itescoMainCatDf_g[(itescoMainCatDf_g['date']>=start_date) & (itescoMainCatDf_g['date']<=end_date) & (itescoMainCatDf_g['nazev_hlavni_kategorie'] == mainCategory)]['date'],
+#                                         y=itescoMainCatDf_g[(itescoMainCatDf_g['date']>=start_date) & (itescoMainCatDf_g['date']<=end_date) & (itescoMainCatDf_g['nazev_hlavni_kategorie'] == mainCategory)]['basePrice'],
+#                                         mode='lines',
+#                                         name=mainCategory
+#                                         ) for mainCategory in itescoMainCatDf_g[(itescoMainCatDf_g['date']>=start_date) & (itescoMainCatDf_g['date']<=end_date)]['nazev_hlavni_kategorie'].unique()],
+#                     'layout': go.Layout(
+#                 title=layout_itesco_main_cat['chart'],
+#                 xaxis=layout_itesco_main_cat['xaxis'],
+#                 yaxis=layout_itesco_main_cat['yaxis'])
+#             }
+#             return figure
+#         else:
+#             figure = {'data': [go.Scatter(x=itescoMainCatDf_g[itescoMainCatDf_g['nazev_hlavni_kategorie']== mainCategory]['date'],
+#                                         y=itescoMainCatDf_g[itescoMainCatDf_g['nazev_hlavni_kategorie']== mainCategory]['basePrice'],
+#                                         mode='lines',
+#                                         name=mainCategory
+#                                         ) for mainCategory in itescoMainCatDf_g['nazev_hlavni_kategorie'].unique()],
+#                     'layout': go.Layout(
+#                 title=layout_itesco_main_cat['chart'],
+#                 xaxis=layout_itesco_main_cat['xaxis'],
+#                 yaxis=layout_itesco_main_cat['yaxis'])
+#             }
+#             return figure
+
+def rc_itesco_main_cat_graph_agg(app):
+    @app.callback(Output('itesco-main-cat-graph-agg','figure'),
+                    [Input('date-picker-range','start_date'),
+                    Input('date-picker-range','end_date')])
+    def callback_itesco_main_cat_graph_agg(start_date,end_date):
         if start_date is not None:
-            start_date = dt.strptime(start_date, '%Y-%m-%d').date()
+            start_date = dt.strptime(start_date,'%Y-%m-%d').date()
         if end_date is not None:
-            end_date = dt.strptime(end_date, '%Y-%m-%d').date()
+            end_date = dt.strptime(end_date,'%Y-%m-%d').date()
         if start_date is not None and end_date is not None:
-            figure = {'data': [go.Scatter(x=itescoMainCatDf_g[(itescoMainCatDf_g['date']>=start_date) & (itescoMainCatDf_g['date']<=end_date) & (itescoMainCatDf_g['nazev_hlavni_kategorie'] == mainCategory)]['date'],
-                                        y=itescoMainCatDf_g[(itescoMainCatDf_g['date']>=start_date) & (itescoMainCatDf_g['date']<=end_date) & (itescoMainCatDf_g['nazev_hlavni_kategorie'] == mainCategory)]['basePrice'],
-                                        mode='lines',
-                                        name=mainCategory
-                                        ) for mainCategory in itescoMainCatDf_g[(itescoMainCatDf_g['date']>=start_date) & (itescoMainCatDf_g['date']<=end_date)]['nazev_hlavni_kategorie'].unique()],
-                    'layout': go.Layout(
-                title=layout_itesco_main_cat['chart'],
-                xaxis=layout_itesco_main_cat['xaxis'],
-                yaxis=layout_itesco_main_cat['yaxis'])
-            }
-            return figure
+            df = itescoMainCatDf_agg[(itescoMainCatDf_agg['date'] >= start_date) & (itescoMainCatDf_agg['date'] <= end_date)].sort_values(by='date')
+            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
+              color="csu_main_category", 
+              labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (suma)"},
+              line_shape="spline", render_mode="svg", height=500, width=750)
+            fig.update_layout({
+                'plot_bgcolor': 'rgba(0,0,0,0)',
+                "legend_orientation":"h",
+                "margin":{"t":25,"l":50,"b":25}
+            })
+            return fig
         else:
-            figure = {'data': [go.Scatter(x=itescoMainCatDf_g[itescoMainCatDf_g['nazev_hlavni_kategorie']== mainCategory]['date'],
-                                        y=itescoMainCatDf_g[itescoMainCatDf_g['nazev_hlavni_kategorie']== mainCategory]['basePrice'],
-                                        mode='lines',
-                                        name=mainCategory
-                                        ) for mainCategory in itescoMainCatDf_g['nazev_hlavni_kategorie'].unique()],
-                    'layout': go.Layout(
-                title=layout_itesco_main_cat['chart'],
-                xaxis=layout_itesco_main_cat['xaxis'],
-                yaxis=layout_itesco_main_cat['yaxis'])
-            }
-            return figure
+            df = itescoMainCatDf_agg.sort_values(by='date')
+            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
+              color="csu_main_category", 
+              labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (suma)"},
+              line_shape="spline", render_mode="svg", height=500, width=750)
+            fig.update_layout({
+                'plot_bgcolor': 'rgba(0,0,0,0)',
+                "legend_orientation":"h",
+                "margin":{"t":25,"l":50,"b":25}
+            })
+            return fig
+
 
 def rc_itesco_weighted_evo_graph(app):
     @app.callback(Output('itesco-weighted-graph','figure'),
@@ -60,7 +96,7 @@ def rc_itesco_weighted_evo_graph(app):
         if end_date is not None:
             end_date = dt.strptime(end_date,'%Y-%m-%d').date()
         if start_date is not None and end_date is not None:
-            filteredDf = itescoWeighted_s[(itescoWeighted_s['date'] >= start_date) & (itescoWeighted_s['date'] >= end_date)]
+            filteredDf = itescoWeighted_s[(itescoWeighted_s['date'] >= start_date) & (itescoWeighted_s['date'] <= end_date)].sort_values(by='date')
             figure = {
                 'data': [
                     go.Scatter(
