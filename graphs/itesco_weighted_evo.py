@@ -11,7 +11,7 @@ from db_connection import itescoWeighted_s as df
 
 fig = px.line(df, x="date", y="vazena_suma", hover_name="vazena_suma",
               labels= {"vazena_suma":"Cena spotřebního koše (zvážená)","date":""},
-              line_shape="spline", render_mode="svg", height=500, width=750)
+              line_shape="spline", render_mode="svg")
 
 fig.update_layout({
     'plot_bgcolor': 'rgba(0,0,0,0)',
@@ -23,14 +23,14 @@ graph = html.Div(children = [
     html.H2("iTesco: Cena spotřebního koše"),
     dcc.Graph(id="itesco-weighted-graph",
             figure=fig)
-])
+], className="graph-cell")
 
 
-layout = {
-    'chart': 'iTesco - vývoj vážené ceny spotřebního koše',
-    'xaxis': {'title': 'Datum'},
-    'yaxis': {'title': 'Vážená cena', 'rangemode': 'tozero'}
-}
+# layout = {
+#     'chart': 'iTesco - vývoj vážené ceny spotřebního koše',
+#     'xaxis': {'title': 'Datum'},
+#     'yaxis': {'title': 'Vážená cena', 'rangemode': 'tozero'}
+# }
 
 # graph = html.Div(
 #     [

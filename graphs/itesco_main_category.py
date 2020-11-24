@@ -12,7 +12,7 @@ from db_connection import itescoMainCatDf_agg as df
 fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
               color="csu_main_category", 
               labels=dict(csu_main_category='',date='',csuRelevantPrice="Cena na jednotku (suma)"),
-              line_shape="spline", render_mode="svg", height=500, width=750)
+              line_shape="spline", render_mode="svg")
 
 fig.update_layout({
     'plot_bgcolor': 'rgba(0,0,0,0)',
@@ -25,4 +25,4 @@ graph = html.Div(children = [
     html.H2("iTesco: ČSÚ hlavní kategorie"),
     dcc.Graph(id="itesco-main-cat-graph-agg",
             figure=fig)
-])
+], className="graph-cell")
