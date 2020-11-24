@@ -1,47 +1,28 @@
 import plotly.graph_objs as go
 import dash_core_components as dcc
 import dash_html_components as html
+import plotly.express as px
 
 # from app import app
 from datetime import datetime as dt
 from dash.dependencies import Input, Output
-from db_connection import itescoMainCatDf_g
 
-layout = {
-    'chart': 'iTesco Spotrebni Kos',
-    'xaxis': {'title': 'Date'},
-    'yaxis': {'title': 'Vyvoj ceny', 'rangemode': 'tozero'}
-}
+from db_connection import itescoMainCatDf_agg as df 
 
-itescoKosTraces = [go.Scatter(
-    x=itescoMainCatDf_g[itescoMainCatDf_g['nazev_hlavni_kategorie']
-                  == mainCategory]['date'],
-    y=itescoMainCatDf_g[itescoMainCatDf_g['nazev_hlavni_kategorie']
-                  == mainCategory]['basePrice'],
-    mode='lines',
-    name=mainCategory
-) for mainCategory in itescoMainCatDf_g['nazev_hlavni_kategorie'].unique()]
+fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
+              color="csu_main_category", 
+              labels=dict(csu_main_category='',date='',csuRelevantPrice="Cena na jednotku (suma)"),
+              line_shape="spline", render_mode="svg", height=500, width=750)
 
-graph = html.Div(
-    [
-        dcc.Graph(
-            id='itesco-main-graph',
-            style={
-                'height':800
-                },
-            figure={
-                'data': itescoKosTraces,
-                'layout': go.Layout(
-                title=layout['chart'],
-                xaxis=layout['xaxis'],
-                yaxis=layout['yaxis'],
-                legend=dict(
-                    y=-2,
-                    yanchor="bottom"
-                    )
-                    )
-                    }
-                  )
-    ],
-    className="graph-cell"
-)
+fig.update_layout({
+    'plot_bgcolor': 'rgba(0,0,0,0)',
+    "legend_orientation":"h",
+    "margin":{"t":25,"l":50,"b":25}
+})
+
+
+graph = html.Div(children = [
+    html.H2("iTesco: ČSÚ hlavní kategorie"),
+    dcc.Graph(id="itesco-main-cat-graph-agg",
+            figure=fig)
+])
