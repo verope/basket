@@ -7,6 +7,6 @@ from db_connection import itescoMainCatDf_agg as df
 # the chart will be based on main categories
 
 graph = html.Div(children = [
-    html.H2("ČSÚ produkt: vývoj ceny koše"),
+    html.H2("iTesco: ČSÚ produkt"),
     dcc.Graph(id="csu-product-graph",figure={})
-])
+], className="graph-cell")

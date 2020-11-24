@@ -1,144 +1,202 @@
 html {
-    box-sizing: border-box;
-  }
-  
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
-  }
+  box-sizing: border-box;
+}
 
-  body {
-    color: #292e3d;
-    background: white;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    margin: 0;
-    min-width: 280px;
-  }
-  
-  .layout-content__container {
-    max-width: 100%;
-    margin: 0 50px;
-  }
-  
-  .graph__container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    height: 1600px
-  }
-  
-  .graph-cell {
-    min-width: 80%;
-    margin-bottom: 50px;
-  }
-  
-  .table__container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .table-cell {
-    margin: 0 40px;
-    min-width: 40%;
-    margin-bottom: 50px;
-  }
-  
-  .page-title {
-    font-size: 24px;
-  }
-  
-  .page-logo {
-    max-width: 200px;
-  }
-  
-  .page-logo img {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .title-bar {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 30px;
-    align-items: center;
-  }
-  
-  .nav-button {
-      padding: 6px 18px;
-      border-radius: 8px;
-      background: #292e3d;
-      color: white;
-      text-decoration: none;
-      margin: 6px;
-      text-align: center;
-      box-shadow: inset 1px -1px black;
-  }
-  
-  .nav-button:hover,
-  .nav-button:visited:hover {
-    background-color: #555861;
-    text-decoration: none;
-    color: #FFF;
-    font-style: bold;
-  }
-  
-  .nav-button:active,
-  .nav-button:visited:active {
-    background-color: #414652;
-    text-decoration: black;
-    color: #FFF;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin: 20px;
-    align-items: flex-end;
-  }
-  
-  .filter__container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .filter_cell {
-    flex-wrap: wrap;
-    margin: 6px;
-    min-width: 20%;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .mini_container {
-    border-radius: 5px;
-    background-color: #e8f4f8;
-    margin: 10px;
-    padding: 15px;
-    position: relative;
-    text-align: center;
-    box-shadow: 2px 2px 2px lightgrey;
-  }
-  
-  .container-display {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .flex-display {
-    display: flex;
-    text-align: center;
-  }
-  
-  td.CalendarDay {
-    padding: 0;
-  }
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  color: #292e3d;
+  background: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  min-width: 280px;
+}
+
+.layout-content__container {
+  max-width: 100%;
+  margin: 0 50px;
+}
+
+.layout-container {
+  width: 100%;
+  max-width: 80vw;
+  margin: 0 auto;
+}
+
+.graph__container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 25px 0;
+}
+
+.graph-cell {
+  flex-grow: 1;
+  flex-basis: 50%;
+}
+
+.graph-cell > h2 {
+  margin: 0;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.graph-cell .dash-dropdown {
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 25px;
+}
+
+.dash-graph {
+  margin: 0 10px;
+}
+
+.table__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.table-cell {
+  margin: 0 40px;
+  min-width: 40%;
+  margin-bottom: 50px;
+}
+
+.page-title {
+  font-size: 24px;
+}
+
+.page-logo {
+  max-width: 200px;
+}
+
+.page-logo img {
+  width: 100%;
+  height: 100%;
+}
+
+.title-bar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 30px;
+  align-items: center;
+}
+
+.nav-button {
+  padding: 6px 18px;
+  border-radius: 8px;
+  background: #292e3d;
+  color: white;
+  text-decoration: none;
+  margin: 6px;
+  text-align: center;
+  box-shadow: inset 1px -1px black;
+}
+
+.nav-button:hover,
+.nav-button:visited:hover {
+  background-color: #555861;
+  text-decoration: none;
+  color: #fff;
+  font-style: bold;
+}
+
+.nav-button:active,
+.nav-button:visited:active {
+  background-color: #414652;
+  text-decoration: black;
+  color: #fff;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 75px;
+  z-index: 9999;
+  padding: 0;
+}
+
+.navbar-container {
+  max-width: 1400px;
+  padding: 0 24px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.navbar__logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 25px;
+}
+
+.navbar__heading {
+  margin: 0;
+  color: white;
+  font-size: 30px;
+  flex-grow: 5;
+  flex-shrink: 0;
+}
+
+.navbar__items-container > a {
+  padding: 0 25px;
+  margin: 0 10px;
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.filter__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 75px;
+}
+
+.filter_cell {
+  flex-wrap: wrap;
+  margin: 6px;
+  min-width: 20%;
+  padding: 20px;
+  text-align: center;
+}
+
+.mini_container {
+  border-radius: 5px;
+  background-color: #e8f4f8;
+  margin: 10px;
+  padding: 15px;
+  position: relative;
+  text-align: center;
+  box-shadow: 2px 2px 2px lightgrey;
+}
+
+.container-display {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-display {
+  display: flex;
+  text-align: center;
+}
+
+td.CalendarDay {
+  padding: 0;
+}

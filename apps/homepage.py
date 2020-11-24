@@ -20,12 +20,11 @@ layout = html.Div(
         navbar_layout,
         html.Div(
             [
-                graph1,
-                graph2,
-                graph3,
-                graph4
+                html.Div([graph1, graph2], className="graph__container"),
+                html.Div([graph3, graph4], className="graph__container"),
             ],
-            className="graph__container"),
+            className="layout-container"
+        ),
     ],
     # className="layout-content__container"
 )

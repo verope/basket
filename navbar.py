@@ -28,38 +28,45 @@ page_title = html.Div(
 #     ], className="navbar"
 # )
 
-APIFY_LOGO = 'https://www.startupjobs.cz/uploads/02be2dede49cec6ffca6e8783797def7.png'
+APIFY_LOGO = 'https://sdk.apify.com/img/apify_logo.svg'
 
 navbar = dbc.Navbar(
     [
-        html.A(
-            # Use row and col to control vertical alignment of logo / brand
-            dbc.Row(
-                [
-                    dbc.Col(html.Img(src=APIFY_LOGO, height="50px"), align="left"),
-                    dbc.Col(dbc.NavbarBrand("Online Spotřební Koš", className="page-title")),
-                ],
-                align="center",
-                no_gutters=False,
-            ),
-            href="https://apify.com",
-        ),
-        dbc.DropdownMenu(
-            children=[
-                dbc.DropdownMenuItem("More pages", header=True),
-                dbc.DropdownMenuItem("Page 2", href="#"),
-                dbc.DropdownMenuItem("Page 3", href="#"),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="More",
-        ),
-        # dbc.NavbarToggler(id="navbar-toggler"),
-        # dbc.Collapse(search_bar, id="navbar-collapse", navbar=True),
+        html.Div([
+            html.A([html.Img(src=APIFY_LOGO)], className="navbar__logo", href="https://apify.com"),
+            html.H1('Online Spotřební Koš', className="navbar__heading"),
+            html.Div([
+                html.A('iTesco', href="#1"),
+                html.A('Kosik.cz', href="#2"),
+                html.A('Rohlik.cz', href="#3"),
+            ], className="navbar__items-container"), 
+        ], className="navbar-container"),
+        # html.A(
+        #     # Use row and col to control vertical alignment of logo / brand
+        #     dbc.Row(
+        #         [
+        #             dbc.Col(html.Img(src=APIFY_LOGO, height="50px"), align="left"),
+        #             dbc.Col(dbc.NavbarBrand("Online Spotřební Koš", className="page-title")),
+        #         ],
+        #         align="center",
+        #         no_gutters=False,
+        #     ),
+        #     href="https://apify.com",
+        # ),
+        # dbc.DropdownMenu(
+        #     children=[
+        #         dbc.DropdownMenuItem("More pages", header=True),
+        #         dbc.DropdownMenuItem("Page 2", href="#"),
+        #         dbc.DropdownMenuItem("Page 3", href="#"),
+        #     ],
+        #     nav=True,
+        #     in_navbar=True,
+        #     label="More",
+        # ),
+        # # dbc.NavbarToggler(id="navbar-toggler"),
+        # # dbc.Collapse(search_bar, id="navbar-collapse", navbar=True),
     ],
     color="dark",
-    dark=True,
-    sticky=True,
 )
 
 
