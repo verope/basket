@@ -138,6 +138,7 @@ body {
   margin: 0 auto;
   display: flex;
   align-items: center;
+  background-color: rgb(47, 44, 43)
 }
 
 .navbar__logo {

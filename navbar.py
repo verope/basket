@@ -5,17 +5,17 @@ import dash_bootstrap_components as dbc
 from filters.date_range import date_range_picker
 
 
-page_logo = html.Div(
-    [
-        html.Img(
-            src='https://www.startupjobs.cz/uploads/02be2dede49cec6ffca6e8783797def7.png'
-        )
-    ], className='page-logo')
+# page_logo = html.Div(
+#     [
+#         html.Img(
+#             src='https://www.startupjobs.cz/uploads/02be2dede49cec6ffca6e8783797def7.png'
+#         )
+#     ], className='page-logo')
 
-page_title = html.Div(
-    [
-        html.H1('RINGLE Online Spotřební Koš')
-    ], className='page-title')
+# page_title = html.Div(
+#     [
+#         html.H1('RINGLE Online Spotřební Koš')
+#     ], className='page-title')
 
 # navbar = html.Nav(
 #     [
