@@ -7,9 +7,9 @@ import datetime
 import plotly.graph_objs as go
 import dash_bootstrap_components as dbc
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+# app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-# app = dash.Dash(__name__) 
+app = dash.Dash(__name__) 
 app.title = 'Online Spotřební Koš'
 server = app.server
 
@@ -44,6 +44,6 @@ rc_itesco_drilldown_sub(app)
 rc_itesco_main_cat_graph_agg(app)
 
 if __name__ == '__main__':
+    # app.run_server(debug=True,host='127.0.0.1',port = 8050)
     app.run_server(debug=True)
-    # , host='127.0.0.1', port = 8050
     # server debug does not work -> fix!
