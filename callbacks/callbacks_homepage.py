@@ -88,9 +88,11 @@ def rc_itesco_main_cat_graph2(app):
     def callback_itesco_main_cat_graph2(csu_main_category):
         df_sub_category = itescoSubCatDf[itescoSubCatDf['csu_main_category']==csu_main_category].sort_values(by='date')
         fig = px.line(df_sub_category, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
-              color="csu_subcategory", labels={"csu_subcategory"+'<br>'},
+              color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
               line_shape="spline", render_mode="svg")
-        fig.update_layout({"margin":{"t":25,"l":50},"legend_orientation":"h"})
+        fig.update_layout({"margin":{"t":25,"l":50},
+                            "legend_orientation":"h",
+                            'plot_bgcolor': 'rgba(0,0,0,0)'})
         return fig
 
 
@@ -100,9 +102,11 @@ def rc_itesco_product_graph_dropdown(app):
     def callback_itesco_main_cat_graph2(csu_main_category):
         df = itescoProductDf[itescoProductDf['csu_main_category']==csu_main_category].sort_values(by='date')
         fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-              color="csu_product", labels={"csu_product"+'<br>'},
+              color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
               line_shape="spline", render_mode="svg")
-        fig.update_layout({"margin":{"t":25,"l":50},"legend_orientation":"h"})
+        fig.update_layout({"margin":{"t":25,"l":50},
+                            "legend_orientation":"h",
+                            'plot_bgcolor': 'rgba(0,0,0,0)'})
         return fig
 
 def rc_itesco_drilldown_sub(app):
@@ -113,21 +117,18 @@ def rc_itesco_drilldown_sub(app):
             filter_value = hoverData['points'][0]['hovertext']
             df = itescoProductDf[itescoProductDf['csu_subcategory']==filter_value].sort_values(by='date')
             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-            color="csu_product", labels={"csu_product"+'<br>'},
+            color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
             line_shape="spline", render_mode="svg")
-            fig.update_layout({"margin":{"t":25,"l":50},"legend_orientation":"h"})
+            fig.update_layout({"margin":{"t":25,"l":50},
+                                "legend_orientation":"h",
+                                'plot_bgcolor': 'rgba(0,0,0,0)'})
             return fig
         else:
             df = itescoProductDf.sort_values(by='date')
             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-            color="csu_product", labels={"csu_product"+'<br>'},
+            color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
             line_shape="spline", render_mode="svg")
-            fig.update_layout({"margin":{"t":25,"l":50},"legend_orientation":"h"})
+            fig.update_layout({"margin":{"t":25,"l":50},
+                                "legend_orientation":"h",
+                                'plot_bgcolor': 'rgba(0,0,0,0)'})
             return fig
-
-def rc_callback_hover_data(app):
-    @app.callback(
-        Output('hover-data', 'children'),
-        Input('csu-sub-category-graph', 'hoverData'))
-    def display_hover_data(hoverData):
-        return json.dumps(hoverData, indent=2,ensure_ascii=True)
