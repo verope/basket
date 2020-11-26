@@ -11,20 +11,13 @@ from graphs.itesco_weighted_evo import graph as graph1
 from graphs.itesco_main_category import graph as graph2
 from graphs.itesco_sub_category2 import graph as graph3
 from graphs.itesco_product import graph as graph4
-
-from navbar import layout as navbar_layout
+from app import app
+from layout.navbar import navbar
 
 
 layout = html.Div(
     [
-        navbar_layout,
-        html.Div(
-            [
-                html.Div([graph1, graph2], className="graph__container"),
-                html.Div([graph3, graph4], className="graph__container"),
-            ],
-            className="layout-container"
-        ),
+        navbar,
     ],
     # className="layout-content__container"
 )

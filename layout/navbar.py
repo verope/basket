@@ -1,8 +1,5 @@
 import dash_html_components as html
-import dash_core_components as dcc
 import dash_bootstrap_components as dbc
-
-from filters.date_range import date_range_picker
 
 
 # page_logo = html.Div(
@@ -34,9 +31,9 @@ navbar = dbc.Navbar(
     [
         html.Div([
             html.A([html.Img(src=APIFY_LOGO)], className="navbar__logo", href="https://apify.com"),
-            html.H1('Online Spotřební Koš', className="navbar__heading"),
+            html.A([html.H1('Online Spotřební Koš')], className="navbar__heading", href="/"),
             html.Div([
-                html.A('iTesco', href="#1"),
+                html.A('iTesco', href="/itesco"),
                 html.A('Kosik.cz', href="#2"),
                 html.A('Rohlik.cz', href="#3"),
             ], className="navbar__items-container"), 
@@ -69,22 +66,6 @@ navbar = dbc.Navbar(
     color="dark",
 )
 
-
-layout = html.Div(
-    [
-        html.Div(
-            [
-                # page_logo,
-                # page_title,
-                navbar
-            ]), #, className="navbar"
-        html.Div(
-            [
-                date_range_picker
-            ], className="filter__container"
-        )
-    ]
-)
 
 
 # import dash_html_components as html
