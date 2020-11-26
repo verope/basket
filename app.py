@@ -18,7 +18,7 @@ app.config.suppress_callback_exceptions = True
 
 from apps import homepage
 from db_connection import conn
-from callbacks.callbacks_homepage import rc_itesco_weighted_evo_graph, rc_itesco_main_cat_graph2, rc_itesco_drilldown_sub, rc_itesco_main_cat_graph_agg
+from callbacks.callbacks_homepage import rc_itesco_weighted_evo_graph, rc_itesco_main_cat_graph2, rc_itesco_drilldown_sub, rc_itesco_main_cat_graph_agg, rc_itesco_product_graph_dropdown
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -39,10 +39,11 @@ def display_page(pathname):
 
 rc_itesco_weighted_evo_graph(app)
 rc_itesco_main_cat_graph2(app)
-rc_itesco_drilldown_sub(app)
+# rc_itesco_drilldown_sub(app)
 rc_itesco_main_cat_graph_agg(app)
+rc_itesco_product_graph_dropdown(app)
 
 if __name__ == '__main__':
-    # app.run_server(debug=True,host='127.0.0.1',port = 8050)
-    app.run_server(debug=True)
+    app.run_server(debug=True,host='127.0.0.1',port = 8050)
+    # app.run_server(debug=False)
     # server debug does not work -> fix!

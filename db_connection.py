@@ -6,8 +6,8 @@ import pandas as pd
 import pyarrow
 
 # !!! FOR LOCAL ENVIRONMENT
-# from dotenv import load_dotenv
-# load_dotenv('config.env')
+from dotenv import load_dotenv
+load_dotenv('config.env')
 
 DATABASE = os.getenv('DATABASE')
 PASSWORD = os.getenv('PASSWORD')
