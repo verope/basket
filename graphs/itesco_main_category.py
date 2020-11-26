@@ -9,6 +9,12 @@ from dash.dependencies import Input, Output
 
 from db_connection import itescoMainCatDf_agg as df 
 
+product = 'Okurky salátové'
+
+popisek = '''
+Sledovaly jsme také vývoj cen u konkrétních produktů v návaznosti na světové události, které by na jejich ceny mohly mít vliv. Například jsme tak zjistily, že cena okurek, které se k nám dováží ze Španělska, stoupla v únoru, což odpovídá době kdy se Španělskem prohnala bouřka Glorie, která poničila velkou část úrody. 
+'''
+
 fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
               color="csu_main_category", 
               labels=dict(csu_main_category='',date='',csuRelevantPrice="Cena na jednotku (suma)"),

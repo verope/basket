@@ -17,6 +17,7 @@ app.config.suppress_callback_exceptions = True
 # why are you here my friend?
 
 from apps import homepage
+from apps import showcase_page
 from apps import itesco_page
 from db_connection import conn
 from callbacks.callbacks_itesco_page import rc_itesco_weighted_evo_graph, rc_itesco_main_cat_graph2, rc_itesco_drilldown_sub, rc_itesco_main_cat_graph_agg, rc_itesco_product_graph_dropdown
@@ -31,6 +32,8 @@ app.layout = html.Div([
 def display_page(pathname):
     if pathname == '/':
         return homepage.layout
+    if pathname == '/showcase':
+        return showcase_page.layout
     if pathname == '/itesco':
         return itesco_page.layout
     # elif pathname == '/kos':

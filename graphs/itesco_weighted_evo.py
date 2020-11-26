@@ -9,6 +9,12 @@ from datetime import datetime as dt
 from dash.dependencies import Input, Output
 from db_connection import itescoWeighted_s as df
 
+product = 'Květák bílý celý'
+
+popisek = '''
+Dále jsme zjistily, že během první vlny koronakrize vzrostla cena květáku. To může být způsobeno tím, že květák se dováží z Francie, do které se kvůli protipandemickým opatřením nemohli dostat zahraniční pracovníci provádějící sklizeň. Stoupla tak cena za práci při sklizni a v důsledku stouply i ceny květáku.
+'''
+
 fig = px.line(df, x="date", y="vazena_suma", hover_name="vazena_suma",
               labels= {"vazena_suma":"Cena spotřebního koše (zvážená)","date":""},
               line_shape="spline", render_mode="svg")
