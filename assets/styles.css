@@ -22,8 +22,12 @@ body {
 }
 
 .layout-content__container {
-  max-width: 100%;
-  margin: 0 50px;
+  padding: 75px 25px 150px 25px;
+  min-height: 100vh;
+  max-width: 1600px;
+  margin: 0 auto;
+  /* background: rgba(255, 0, 0, 0.05); */
+  /* border: 5px dashed red; */
 }
 
 .layout-container {
@@ -156,11 +160,21 @@ body {
 }
 
 .navbar__heading {
-  margin: 0;
   color: white;
-  font-size: 30px;
   flex-grow: 5;
   flex-shrink: 0;
+  text-decoration: none;
+}
+
+.navbar__heading h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.navbar__heading:visited,
+.navbar__heading:active,
+.navbar__heading:focus {
+  color: white;
 }
 
 .navbar__items-container > a {
@@ -175,7 +189,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding-top: 75px;
 }
 
 .filter_cell {
