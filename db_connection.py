@@ -68,6 +68,43 @@ try:
 except Exception as e:
     print(e)
 
+##############
+# SHOWCASES
+##############
+
+# OKURKY
+try:
+    sql = 'select * from WORKSPACE_179647280."out_rohlik_spotrebni_kos_item_agg" WHERE "csu_product" = \'Okurky salátové\''
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    okurkyDf = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+# KVETAK
+try:
+    sql = 'select * from WORKSPACE_179647280."out_rohlik_spotrebni_kos_item_agg" WHERE "csu_product" = \'Květák bílý celý\''
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    kvetakDf = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+# LIHOVINY
+try:
+    sql = 'SELECT * FROM "out_itesco_spotrebni_kos_product_agg" WHERE "csu_main_category" = \'Lihoviny\''
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    lihovinyDf = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
 
 # DATA TRANSFORMATIONS
 

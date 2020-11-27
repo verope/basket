@@ -86,29 +86,50 @@ def rc_itesco_main_cat_graph2(app):
     @app.callback(Output('csu-sub-category-graph','figure'),
                     Input('csu-main-category-dropdown','value'))
     def callback_itesco_main_cat_graph2(csu_main_category):
-        df_sub_category = itescoSubCatDf[itescoSubCatDf['csu_main_category']==csu_main_category].sort_values(by='date')
-        fig = px.line(df_sub_category, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
-              color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-              line_shape="spline", render_mode="svg")
-        fig.update_layout({"margin":{"t":25,"l":50},
-                            "legend_orientation":"h",
-                            'plot_bgcolor': 'rgba(0,0,0,0)'})
-        return fig
+        if csu_main_category is not None:
+            df_sub_category = itescoSubCatDf[itescoSubCatDf['csu_main_category']==csu_main_category].sort_values(by='date')
+            fig = px.line(df_sub_category, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
+                color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
+                line_shape="spline", render_mode="svg")
+            fig.update_layout({"margin":{"t":25,"l":50},
+                                "legend_orientation":"h",
+                                'plot_bgcolor': 'rgba(0,0,0,0)'})
+            return fig
+        else:
+            df_sub_category = itescoSubCatDf.sort_values(by='date')
+            fig = px.line(df_sub_category, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
+                color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
+                line_shape="spline", render_mode="svg")
+            fig.update_layout({"margin":{"t":25,"l":50},
+                                "legend_orientation":"h",
+                                'plot_bgcolor': 'rgba(0,0,0,0)'})
+            return fig
 
 
 def rc_itesco_product_graph_dropdown(app):
     @app.callback(Output('csu-product-graph','figure'),
-                    Input('csu-main-category-dropdown','value'))
-    def callback_itesco_main_cat_graph2(csu_main_category):
-        df = itescoProductDf[itescoProductDf['csu_main_category']==csu_main_category].sort_values(by='date')
-        fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-              color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-              line_shape="spline", render_mode="svg")
-        fig.update_layout({"margin":{"t":25,"l":50},
-                            "legend_orientation":"h",
-                            'plot_bgcolor': 'rgba(0,0,0,0)'})
-        return fig
+                    Input('csu-sub-category-dropdown','value'))
+    def callback_product_dropdown(csu_subcategory):
+        if csu_subcategory is not None:
+            df = itescoProductDf[itescoProductDf['csu_subcategory']==csu_subcategory].sort_values(by='date')
+            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
+                color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
+                line_shape="spline", render_mode="svg")
+            fig.update_layout({"margin":{"t":25,"l":50},
+                                "legend_orientation":"h",
+                                'plot_bgcolor': 'rgba(0,0,0,0)'})
+            return fig
+        else:
+            df = itescoProductDf.sort_values(by='date')
+            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
+                color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
+                line_shape="spline", render_mode="svg")
+            fig.update_layout({"margin":{"t":25,"l":50},
+                                "legend_orientation":"h",
+                                'plot_bgcolor': 'rgba(0,0,0,0)'})
+            return fig
 
+## not used right now - the graph is illegible when not filtered
 def rc_itesco_drilldown_sub(app):
     @app.callback(Output('csu-product-graph','figure'),
                     Input('csu-sub-category-graph','hoverData'))
