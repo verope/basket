@@ -8,13 +8,14 @@ sys.path.append("..") # Adds higher directory to python modules path.
 from app import app
 from layout.navbar import navbar
 
-import graphs.itesco_main_category as graph1
-import graphs.itesco_weighted_evo as graph2
+import graphs_showcase.okurky as graph1
+import graphs_showcase.kvetak as graph2
+import graphs_showcase.lihoviny as graph3
 
 # product
 # popisek
 
-arr = [graph1, graph2]
+arr = [graph1, graph2, graph3]
 
 def renderGraphs(data):
     return html.Div([
@@ -32,9 +33,10 @@ graph_list = list(graphs)
 
 layout = html.Div([
     navbar,
-    html.H1('Showcase heading', className="showcase__heading"),
+    html.H1('Ukázky vlivu světových událostí na vývoj cen potravin', className="showcase__heading"),
     graph_list[0],
     graph_list[1],
+    graph_list[2],
 ], className="layout-content__container")
 
 # children = [graph_list], 

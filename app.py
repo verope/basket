@@ -10,7 +10,7 @@ import dash_bootstrap_components as dbc
 # app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app = dash.Dash(__name__) 
-app.title = 'Online Spotřební Koš'
+app.title = 'Online spotřební koš'
 server = app.server
 
 app.config.suppress_callback_exceptions = True

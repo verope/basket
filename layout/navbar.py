@@ -33,6 +33,7 @@ navbar = dbc.Navbar(
             html.A([html.Img(src=APIFY_LOGO)], className="navbar__logo", href="https://apify.com"),
             html.A([html.H1('Online Spotřební Koš')], className="navbar__heading", href="/"),
             html.Div([
+                html.A('Ukázky', href="/showcase"),
                 html.A('iTesco', href="/itesco"),
                 html.A('Kosik.cz', href="#2"),
                 html.A('Rohlik.cz', href="#3"),
