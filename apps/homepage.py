@@ -23,7 +23,7 @@ layout = html.Div(
         html.H4('Klikněte na logo eshopu pro zobrazení interaktivního toolu'),
         html.Div([
             html.A(className="homepage__box homepage__box--itesco", href="/itesco"),
-            html.A(className="homepage__box homepage__box--rohlik", href="#rohlik"),
+            html.A(className="homepage__box homepage__box--rohlik", href="/rohlik"),
             html.A(className="homepage__box homepage__box--kosik", href="#kosik"),
         ], className="homepage__box-container"),
         html.Hr(className="homepage__divider"),

@@ -1,30 +1,6 @@
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
-
-# page_logo = html.Div(
-#     [
-#         html.Img(
-#             src='https://www.startupjobs.cz/uploads/02be2dede49cec6ffca6e8783797def7.png'
-#         )
-#     ], className='page-logo')
-
-# page_title = html.Div(
-#     [
-#         html.H1('RINGLE Online Spotřební Koš')
-#     ], className='page-title')
-
-# navbar = html.Nav(
-#     [
-#         html.A('Interaktivní dashboard', href="/",
-#                className="nav-button"),
-#         html.A('Online Spotřební Koš', href="/kos",
-#                className="nav-button"),
-#         html.A('Zajímavosti', href="/zajimavosti",
-#                className="nav-button"),
-#     ], className="navbar"
-# )
-
 APIFY_LOGO = 'https://sdk.apify.com/img/apify_logo.svg'
 
 navbar = dbc.Navbar(
@@ -35,8 +11,8 @@ navbar = dbc.Navbar(
             html.Div([
                 html.A('Ukázky', href="/showcase"),
                 html.A('iTesco', href="/itesco"),
+                html.A('Rohlik.cz', href="/rohlik"),
                 html.A('Kosik.cz', href="#2"),
-                html.A('Rohlik.cz', href="#3"),
             ], className="navbar__items-container"), 
         ], className="navbar-container"),
         # html.A(

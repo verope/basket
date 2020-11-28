@@ -5,9 +5,10 @@ import plotly.express as px
 from datetime import datetime as dt
 
 from app import app
-from datetime import datetime as dt
-from dash.dependencies import Input, Output
-from db_connection import itescoWeighted_s as df
+# from datetime import datetime as dt
+from db_connection import rohlikKosVahy as df
+
+df = df.sort_values(by='date')
 
 fig = px.line(df, x="date", y="vazena_suma", hover_name="vazena_suma",
               labels= {"vazena_suma":"Cena spotřebního koše (zvážená)","date":""},
@@ -21,7 +22,7 @@ fig.update_layout({
 })
 
 graph = html.Div(children = [
-    html.H2("iTesco: Cena spotřebního koše"),
-    dcc.Graph(id="itesco-weighted-graph",
+    html.H2("Rohlik: Cena spotřebního koše"),
+    dcc.Graph(id="rohlik-weighted-graph",
             figure=fig)
 ], className="graph-cell")

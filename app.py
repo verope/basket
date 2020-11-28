@@ -19,8 +19,8 @@ app.config.suppress_callback_exceptions = True
 from apps import homepage
 from apps import showcase_page
 from apps import itesco_page
+from apps import rohlik_page
 from db_connection import conn
-from callbacks.callbacks_itesco_page import rc_itesco_weighted_evo_graph, rc_itesco_main_cat_graph2, rc_itesco_drilldown_sub, rc_itesco_main_cat_graph_agg, rc_itesco_product_graph_dropdown
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -32,22 +32,34 @@ app.layout = html.Div([
 def display_page(pathname):
     if pathname == '/':
         return homepage.layout
-    if pathname == '/showcase':
+    elif pathname == '/showcase':
         return showcase_page.layout
-    if pathname == '/itesco':
+    elif pathname == '/itesco':
         return itesco_page.layout
-    # elif pathname == '/kos':
-    #     return kos.layout # --> add!
+    elif pathname == '/rohlik':
+        return rohlik_page.layout
     # elif pathname == '/zajimavosti':
     #     return zajimavosti.layout # --> add!
     else:
         return '404'
+
+from callbacks.itesco_page import rc_itesco_weighted_evo_graph
+from callbacks.itesco_page import rc_itesco_main_cat_graph2
+from callbacks.itesco_page import rc_itesco_drilldown_sub
+from callbacks.itesco_page import rc_itesco_main_cat_graph_agg
+from callbacks.itesco_page import rc_itesco_product_graph_dropdown
+from callbacks.rohlik_page import rc_rohlik_main_cat_graph, graph_layout, generate_time_graph
+from callbacks.rohlik_page import rc_rohlik_sub_cat_graph
+from callbacks.rohlik_page import rc_rohlik_product_graph
 
 rc_itesco_weighted_evo_graph(app)
 rc_itesco_main_cat_graph2(app)
 # rc_itesco_drilldown_sub(app)
 rc_itesco_main_cat_graph_agg(app)
 rc_itesco_product_graph_dropdown(app)
+rc_rohlik_main_cat_graph(app)
+rc_rohlik_sub_cat_graph(app)
+rc_rohlik_product_graph(app)
 
 if __name__ == '__main__':
     # app.run_server(debug=True,host='127.0.0.1',port = 8050)
