@@ -9,7 +9,7 @@ product = 'Okurky salátové'
 
 popisek = '''
 Sledovaly jsme také vývoj cen u konkrétních produktů v návaznosti na světové události, které by na jejich ceny mohly mít vliv. Například jsme tak zjistily, že cena okurek, které se k nám dováží ze Španělska, stoupla v únoru, což odpovídá době kdy se Španělskem prohnala bouřka Glorie, která poničila velkou část úrody. 
-</n>zdroj: rohlik.cz
+Zdroj: rohlik.cz
 '''
 
 df = df.sort_values(by='date')

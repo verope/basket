@@ -7,7 +7,7 @@ from db_connection import kvetakDf as df
 
 popisek = '''
 Dále jsme zjistily, že během první vlny koronakrize vzrostla cena květáku. To může být způsobeno tím, že květák se dováží z Francie, do které se kvůli protipandemickým opatřením nemohli dostat zahraniční pracovníci provádějící sklizeň. Stoupla tak cena za práci při sklizni a v důsledku stouply i ceny květáku.
-</n>zdroj: rohlik.cz
+Zdroj: rohlik.cz
 '''
 product = 'Květák bílý celý'
 

@@ -3,7 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-sys.path.append("..") # Adds higher directory to python modules path.
+# sys.path.append("..") # Adds higher directory to python modules path.
 
 from app import app
 from layout.navbar import navbar
@@ -24,7 +24,7 @@ layout = html.Div(
         html.Div([
             html.A(className="homepage__box homepage__box--itesco", href="/itesco"),
             html.A(className="homepage__box homepage__box--rohlik", href="/rohlik"),
-            html.A(className="homepage__box homepage__box--kosik", href="#kosik"),
+            html.A(className="homepage__box homepage__box--kosik", href="/kosik"),
         ], className="homepage__box-container"),
         html.Hr(className="homepage__divider"),
         html.Div([

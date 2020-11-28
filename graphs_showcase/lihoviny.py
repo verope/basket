@@ -9,7 +9,7 @@ product = 'Lihoviny'
 
 popisek = '''
 Dopad zvýšené spotřební daně na lihoviny (konec ledna 2020).
-</n>zdroj: rohlik.cz
+Zdroj: rohlik.cz
 '''
 
 breakdownCol = 'csu_product'
