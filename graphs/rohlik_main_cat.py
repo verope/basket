@@ -1,13 +1,10 @@
-# import plotly.graph_objs as go
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 
-# from app import app
-from datetime import datetime as dt
-from dash.dependencies import Input, Output
+from db_connection import rohlikMainCat as df 
 
-from db_connection import itescoMainCatDf_agg as df 
+df = df.sort_values(by='date')
 
 fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
               color="csu_main_category", 
@@ -23,7 +20,7 @@ fig.update_layout({
 
 
 graph = html.Div(children = [
-    html.H2("iTesco: ČSÚ hlavní kategorie"),
-    dcc.Graph(id="itesco-main-cat-graph-agg",
+    html.H2("Rohlik: ČSÚ hlavní kategorie"),
+    dcc.Graph(id="rohlik-main-cat-graph",
             figure=fig)
 ], className="graph-cell")
