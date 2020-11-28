@@ -9,6 +9,7 @@ Spotřební koš sestává z různých druhů výdajů na chod domácnosti včet
 eSPOKO konkrétně analyzuje cenu potravin, tedy kromě bydlení té nejdůležitější kategorie výdajů. 
 V našem online toolu, na rozdíl od oficiálního webu ČSÚ, můžete sledovat vývoj cen potravin v reálném čase (aktualizace každý den) u konkrétních produktů 
 a s přehlednou vizualizací. Data se tedy dají použít víceméně okamžitě předtím, než ČSÚ vydá oficiální analýzu, což může trvat týdny až měsíce. 
+Projekt vznikl v rámci Czechitas DA Projekt: Praha.
 '''
 
 subtitle = '''Tato stránka obsahuje interaktivní analytické vizualizace pro sledování vývoje cen potravin na třech online potravinových eshopech – iTesco.cz, Rohlik.cz a Kosik.cz.

@@ -122,6 +122,60 @@ except Exception as e:
     print(e)
 
 
+
+##################
+# KOSIK
+##################
+
+# out_kosik_spotrebni_kos_main_cat_agg
+# out_kosik_spotrebni_kos_sub_cat_agg
+# out_kosik_spotrebni_kos_product_agg
+# out_kosik_spotrebni_kos_item_agg
+
+try:
+    sql = 'select * from WORKSPACE_179647280."kosik_spotrebni_kos_vazena_suma"'
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    kosikKosVahy = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+try:
+    sql = 'select * from WORKSPACE_179647280."out_kosik_spotrebni_kos_main_cat_agg"'
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    kosikMainCat = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+try:
+    sql = 'select * from WORKSPACE_179647280."out_kosik_spotrebni_kos_sub_cat_agg"'
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    kosikSubCat = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+try:
+    sql = 'select * from WORKSPACE_179647280."out_kosik_spotrebni_kos_product_agg"'
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    kosikProduct = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description])
+    cursor.close()
+except Exception as e:
+    print(e)
+
+
+
+
+
 ##################
 # SHOWCASES
 ##################
@@ -150,7 +204,7 @@ except Exception as e:
 
 # LIHOVINY
 try:
-    sql = 'SELECT * FROM "out_itesco_spotrebni_kos_product_agg" WHERE "csu_main_category" = \'Lihoviny\''
+    sql = 'SELECT * FROM "out_rohlik_spotrebni_kos_product_agg" WHERE "csu_main_category" = \'Lihoviny\''
     cursor = conn.cursor()
     cursor.execute(sql)
     lihovinyDf = pd.DataFrame.from_records(

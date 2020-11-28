@@ -20,6 +20,8 @@ from apps import homepage
 from apps import showcase_page
 from apps import itesco_page
 from apps import rohlik_page
+from apps import kosik_page
+
 from db_connection import conn
 
 app.layout = html.Div([
@@ -38,8 +40,8 @@ def display_page(pathname):
         return itesco_page.layout
     elif pathname == '/rohlik':
         return rohlik_page.layout
-    # elif pathname == '/zajimavosti':
-    #     return zajimavosti.layout # --> add!
+    elif pathname == '/kosik':
+        return kosik_page.layout # --> add!
     else:
         return '404'
 
@@ -48,18 +50,30 @@ from callbacks.itesco_page import rc_itesco_main_cat_graph2
 from callbacks.itesco_page import rc_itesco_drilldown_sub
 from callbacks.itesco_page import rc_itesco_main_cat_graph_agg
 from callbacks.itesco_page import rc_itesco_product_graph_dropdown
-from callbacks.rohlik_page import rc_rohlik_main_cat_graph, graph_layout, generate_time_graph
+from callbacks.rohlik_page import rc_rohlik_main_cat_graph
 from callbacks.rohlik_page import rc_rohlik_sub_cat_graph
 from callbacks.rohlik_page import rc_rohlik_product_graph
+from callbacks.rohlik_page import rc_rohlik_weighted_evo_graph
+from callbacks.kosik_page import rc_kosik_main_cat_graph
+from callbacks.kosik_page import rc_kosik_sub_cat_graph
+from callbacks.kosik_page import rc_kosik_product_graph
+from callbacks.kosik_page import rc_kosik_weighted_evo_graph
 
 rc_itesco_weighted_evo_graph(app)
 rc_itesco_main_cat_graph2(app)
 # rc_itesco_drilldown_sub(app)
 rc_itesco_main_cat_graph_agg(app)
 rc_itesco_product_graph_dropdown(app)
+
+rc_rohlik_weighted_evo_graph(app)
 rc_rohlik_main_cat_graph(app)
 rc_rohlik_sub_cat_graph(app)
 rc_rohlik_product_graph(app)
+
+rc_kosik_weighted_evo_graph(app)
+rc_kosik_main_cat_graph(app)
+rc_kosik_sub_cat_graph(app)
+rc_kosik_product_graph(app)
 
 if __name__ == '__main__':
     # app.run_server(debug=True,host='127.0.0.1',port = 8050)
