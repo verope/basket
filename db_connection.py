@@ -173,9 +173,6 @@ except Exception as e:
     print(e)
 
 
-
-
-
 ##################
 # SHOWCASES
 ##################
@@ -213,6 +210,8 @@ try:
 except Exception as e:
     print(e)
 
+
+conn.close()
 
 # DATA TRANSFORMATIONS
 
