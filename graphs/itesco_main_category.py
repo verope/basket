@@ -12,7 +12,7 @@ from db_connection import itescoMainCatDf_agg as df
 fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
               color="csu_main_category", 
               labels=dict(csu_main_category='',date='',csuRelevantPrice="Cena na jednotku (průměr)"),
-              line_shape="spline", render_mode="svg")
+              line_shape="linear", render_mode="webgl")
 
 fig.update_layout({
     'plot_bgcolor': 'rgba(0,0,0,0)',

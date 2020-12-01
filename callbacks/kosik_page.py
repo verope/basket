@@ -21,7 +21,7 @@ graph_layout = {
 def generate_time_graph(df,y,breakdown,layout,y_label):
     fig = px.line(df,x="date",y=y,hover_name=breakdown,
                  color=breakdown,labels={breakdown:'', "date":'',y:y_label},
-                 line_shape="spline",render_mode="svg")
+                 line_shape="linear",render_mode="webgl")
     fig.update_layout(layout)
     return fig
 
@@ -44,8 +44,8 @@ def rc_kosik_main_cat_graph(app):
             #     hover_name="csu_main_category",
             #     color="csu_main_category", 
             #     labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (průměr)"},
-            #     line_shape="spline", 
-            #     render_mode="svg"
+            #     line_shape="linear", 
+            #     render_mode="webgl"
             #     )
             # fig.update_layout(graph_layout)
             # return fig
@@ -59,7 +59,7 @@ def rc_kosik_main_cat_graph(app):
             # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
             #   color="csu_main_category", 
             #   labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (suma)"},
-            #   line_shape="spline", render_mode="svg")
+            #   line_shape="linear", render_mode="webgl")
             # fig.update_layout(graph_layout)
             # return fig
 
@@ -89,7 +89,7 @@ def rc_kosik_sub_cat_graph(app):
             return generate_time_graph(df,"csuRelevantPrice","csu_subcategory",graph_layout,"Cena za jednotku (průměr)")
             # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
             #     color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            #     line_shape="spline", render_mode="svg")
+            #     line_shape="linear", render_mode="webgl")
             # fig.update_layout({"margin":{"t":25,"l":50},
             #                     "legend_orientation":"h",
             #                     'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -99,7 +99,7 @@ def rc_kosik_sub_cat_graph(app):
             return generate_time_graph(df,"csuRelevantPrice","csu_subcategory",graph_layout,"Cena za jednotku (průměr)")
             # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
             #     color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            #     line_shape="spline", render_mode="svg")
+            #     line_shape="linear", render_mode="webgl")
             # fig.update_layout({"margin":{"t":25,"l":50},
             #                     "legend_orientation":"h",
             #                     'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -115,7 +115,7 @@ def rc_kosik_product_graph(app):
             return generate_time_graph(df,"csuRelevantPrice","csu_product",graph_layout,"Cena za jednotku (průměr)")
             # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
             #     color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            #     line_shape="spline", render_mode="svg")
+            #     line_shape="linear", render_mode="webgl")
             # fig.update_layout({"margin":{"t":25,"l":50},
             #                     "legend_orientation":"h",
             #                     'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -125,7 +125,7 @@ def rc_kosik_product_graph(app):
             return generate_time_graph(df,"csuRelevantPrice","csu_product",graph_layout,"Cena za jednotku (průměr)")
             # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
             #     color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            #     line_shape="spline", render_mode="svg")
+            #     line_shape="linear", render_mode="webgl")
             # fig.update_layout({"margin":{"t":25,"l":50},
             #                     "legend_orientation":"h",
             #                     'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -141,7 +141,7 @@ def rc_kosik_product_graph(app):
 #             df = kosikProduct[kosikProduct['csu_subcategory']==filter_value].sort_values(by='date')
 #             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
 #             color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-#             line_shape="spline", render_mode="svg")
+#             line_shape="linear", render_mode="webgl")
 #             fig.update_layout({"margin":{"t":25,"l":50},
 #                                 "legend_orientation":"h",
 #                                 'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -150,7 +150,7 @@ def rc_kosik_product_graph(app):
 #             df = kosikProduct.sort_values(by='date')
 #             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
 #             color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-#             line_shape="spline", render_mode="svg")
+#             line_shape="linear", render_mode="webgl")
 #             fig.update_layout({"margin":{"t":25,"l":50},
 #                                 "legend_orientation":"h",
 #                                 'plot_bgcolor': 'rgba(0,0,0,0)'})

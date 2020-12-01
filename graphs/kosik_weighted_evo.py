@@ -10,7 +10,7 @@ df = df.sort_values(by='date')
 
 fig = px.line(df, x="date", y="vazena_suma", hover_name="vazena_suma",
               labels= {"vazena_suma":"Cena spotřebního koše (zvážená)","date":""},
-              line_shape="spline", render_mode="svg")
+              line_shape="linear", render_mode="webgl")
 
 fig.update_layout({
     'plot_bgcolor': 'rgba(0,0,0,0)',

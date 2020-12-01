@@ -29,7 +29,7 @@ def rc_itesco_main_cat_graph_agg(app):
             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
               color="csu_main_category", 
               labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (suma)"},
-              line_shape="spline", render_mode="svg")
+              line_shape="linear", render_mode="webgl")
             fig.update_layout({
                 'plot_bgcolor': 'rgba(0,0,0,0)',
                 "legend_orientation":"h",
@@ -41,7 +41,7 @@ def rc_itesco_main_cat_graph_agg(app):
             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
               color="csu_main_category", 
               labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (suma)"},
-              line_shape="spline", render_mode="svg")
+              line_shape="linear", render_mode="webgl")
             fig.update_layout({
                 'plot_bgcolor': 'rgba(0,0,0,0)',
                 "legend_orientation":"h",
@@ -63,7 +63,7 @@ def rc_itesco_weighted_evo_graph(app):
             df = itescoWeighted_s[(itescoWeighted_s['date'] >= start_date) & (itescoWeighted_s['date'] <= end_date)].sort_values(by='date')
             fig = px.line(df, x="date", y="vazena_suma", hover_name="vazena_suma",
               labels= {"vazena_suma":"Cena spotřebního koše (zvážená)","date":""},
-              line_shape="spline", render_mode="svg")
+              line_shape="linear", render_mode="webgl")
             fig.update_layout({
                 'plot_bgcolor': 'rgba(0,0,0,0)',
                 "legend_orientation":"h",
@@ -74,7 +74,7 @@ def rc_itesco_weighted_evo_graph(app):
             df = itescoWeighted_s.sort_values(by='date')
             fig = px.line(df, x="date", y="vazena_suma", hover_name="vazena_suma",
               labels= {"vazena_suma":"Cena spotřebního koše (zvážená)","date":""},
-              line_shape="spline", render_mode="svg")
+              line_shape="linear", render_mode="webgl")
             fig.update_layout({
                 'plot_bgcolor': 'rgba(0,0,0,0)',
                 "legend_orientation":"h",
@@ -90,7 +90,7 @@ def rc_itesco_main_cat_graph2(app):
             df_sub_category = itescoSubCatDf[itescoSubCatDf['csu_main_category']==csu_main_category].sort_values(by='date')
             fig = px.line(df_sub_category, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
                 color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-                line_shape="spline", render_mode="svg")
+                line_shape="linear", render_mode="webgl")
             fig.update_layout({"margin":{"t":25,"l":50},
                                 "legend_orientation":"h",
                                 'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -99,7 +99,7 @@ def rc_itesco_main_cat_graph2(app):
             df_sub_category = itescoSubCatDf.sort_values(by='date')
             fig = px.line(df_sub_category, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
                 color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-                line_shape="spline", render_mode="svg")
+                line_shape="linear", render_mode="webgl")
             fig.update_layout({"margin":{"t":25,"l":50},
                                 "legend_orientation":"h",
                                 'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -114,7 +114,7 @@ def rc_itesco_product_graph_dropdown(app):
             df = itescoProductDf[itescoProductDf['csu_subcategory']==csu_subcategory].sort_values(by='date')
             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
                 color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-                line_shape="spline", render_mode="svg")
+                line_shape="linear", render_mode="webgl")
             fig.update_layout({"margin":{"t":25,"l":50},
                                 "legend_orientation":"h",
                                 'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -123,7 +123,7 @@ def rc_itesco_product_graph_dropdown(app):
             df = itescoProductDf.sort_values(by='date')
             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
                 color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-                line_shape="spline", render_mode="svg")
+                line_shape="linear", render_mode="webgl")
             fig.update_layout({"margin":{"t":25,"l":50},
                                 "legend_orientation":"h",
                                 'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -139,7 +139,7 @@ def rc_itesco_drilldown_sub(app):
             df = itescoProductDf[itescoProductDf['csu_subcategory']==filter_value].sort_values(by='date')
             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
             color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            line_shape="spline", render_mode="svg")
+            line_shape="linear", render_mode="webgl")
             fig.update_layout({"margin":{"t":25,"l":50},
                                 "legend_orientation":"h",
                                 'plot_bgcolor': 'rgba(0,0,0,0)'})
@@ -148,7 +148,7 @@ def rc_itesco_drilldown_sub(app):
             df = itescoProductDf.sort_values(by='date')
             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
             color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            line_shape="spline", render_mode="svg")
+            line_shape="linear", render_mode="webgl")
             fig.update_layout({"margin":{"t":25,"l":50},
                                 "legend_orientation":"h",
                                 'plot_bgcolor': 'rgba(0,0,0,0)'})

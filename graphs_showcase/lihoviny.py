@@ -19,7 +19,7 @@ df = df.sort_values(by='date')
 fig = px.line(df, x="date", y="csuRelevantPrice", hover_name=breakdownCol,
               color=breakdownCol, 
               labels = {breakdownCol:'',"date":'',"csuRelevantPrice":"Cena na jednotku"},
-              line_shape="spline", render_mode="svg")
+              line_shape="linear", render_mode="webgl")
 
 fig.update_layout({
     'plot_bgcolor': 'rgba(0,0,0,0)',
