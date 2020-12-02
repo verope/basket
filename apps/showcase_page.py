@@ -11,11 +11,12 @@ from layout.navbar import navbar
 import graphs_showcase.okurky as graph1
 import graphs_showcase.kvetak as graph2
 import graphs_showcase.lihoviny as graph3
+import graphs_showcase.vepr as graph4
 
 # product
 # popisek
 
-arr = [graph1, graph2, graph3]
+arr = [graph1, graph2, graph3, graph4]
 
 def renderGraphs(data):
     return html.Div([
@@ -37,6 +38,7 @@ layout = html.Div([
     graph_list[0],
     graph_list[1],
     graph_list[2],
+    graph_list[3]
 ], className="layout-content__container")
 
 # children = [graph_list], 

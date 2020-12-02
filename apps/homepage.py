@@ -30,7 +30,15 @@ layout = html.Div(
         html.Div([
             html.H2('O projektu'),
             html.P(o_projektu.popis_projektu),
-            ])
+            html.H2('Spotřební koš'),
+            html.P(o_projektu.popis_kos),
+            ]),
+        html.Hr(className="homepage__divider"),    
+        html.Div([
+            html.A('GitHub repozitář projektu', href="https://github.com/verope/basket", className="homepage__link"),
+            html.Br(),
+            html.A('Medium článek projektu', href="https://ringle-czechitas.medium.com/spot%C5%99ebn%C3%AD-potravinov%C3%BD-ko%C5%A1-c171d38c906d",className="homepage__link"),
+        ], className = "homepage__link-container")
     ],
     className="layout-content__container"
 )

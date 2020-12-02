@@ -101,3 +101,16 @@
   background-image: url(https://ziskej-bonus.cz/wp-content/uploads/2018/08/logo-rohlik.png);
   background-size: 60%;
 }
+
+
+.homepage__link > a {
+  padding: 0 25px;
+  margin: 0 10px;
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.homepage__link-container {
+  display: inline;
+}

@@ -210,6 +210,16 @@ try:
 except Exception as e:
     print(e)
 
+# VEPROVY
+try:
+    sql = 'SELECT * FROM "out_rohlik_spotrebni_kos_sub_cat_agg" WHERE "csu_subcategory" = \'Vepřové maso\''
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    veprDf = pd.DataFrame.from_records(
+        iter(cursor), columns=[x[0]for x in cursor.description]).sort_values(by='date')
+    cursor.close()
+except Exception as e:
+    print(e)
 
 conn.close()
 
