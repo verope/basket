@@ -1,135 +1,208 @@
-from db_connection import rohlikKosVahy
-from db_connection import rohlikMainCat
-from db_connection import rohlikSubCat
-from db_connection import rohlikProduct
-
 from datetime import datetime as dt
 import datetime
-import plotly.graph_objs as go
 import plotly.express as px
-
 from dash.dependencies import Input, Output
-from app import app
-
-graph_layout = {
-    'plot_bgcolor': 'rgba(0,0,0,0)',
-    'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-    "legend_orientation":"h",
-    "margin":{"t":25,"l":50,"b":25}
-    }
-
-def generate_time_graph(df,y,breakdown,layout,y_label):
-    fig = px.line(df,x="date",y=y,hover_name=breakdown,
-                 color=breakdown,labels={breakdown:'', "date":'',y:y_label},
-                 line_shape="linear",render_mode="webgl")
-    fig.update_layout(layout)
-    return fig
-
-
-def rc_rohlik_main_cat_graph(app):
-    @app.callback(Output('rohlik-main-cat-graph','figure'),
-                    [Input('date-picker-range','start_date'),
-                    Input('date-picker-range','end_date')])
-    def rohlik_main_cat_graph_date(start_date,end_date):
-        if start_date is not None:
-            start_date = dt.strptime(start_date,'%Y-%m-%d').date()
-        if end_date is not None:
-            end_date = dt.strptime(end_date,'%Y-%m-%d').date()
-        if start_date is not None and end_date is not None and start_date <= end_date:
-            df = rohlikMainCat[(rohlikMainCat['date'] >= start_date) & (rohlikMainCat['date'] <= end_date)].sort_values(by='date')
-            return generate_time_graph(df,"csuRelevantPrice","csu_main_category",graph_layout,"Cena za jednotku (průměr)")
-            # fig = px.line(
-            #     df, x="date", 
-            #     y="csuRelevantPrice", 
-            #     hover_name="csu_main_category",
-            #     color="csu_main_category", 
-            #     labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (průměr)"},
-            #     line_shape="linear", 
-            #     render_mode="webgl"
-            #     )
-            # fig.update_layout(graph_layout)
-            # return fig
-        elif start_date is not None and end_date is not None and start_date > end_date:
-            new_end_date = start_date
-            df = rohlikMainCat[(rohlikMainCat['date'] >= start_date) & (rohlikMainCat['date'] <= new_end_date)].sort_values(by='date')
-            return generate_time_graph(df,"csuRelevantPrice","csu_main_category",graph_layout,"Cena za jednotku (průměr)")
-        else:
-            df = rohlikMainCat.sort_values(by='date')
-            return generate_time_graph(df,"csuRelevantPrice","csu_main_category",graph_layout,"Cena za jednotku (průměr)")
-            # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
-            #   color="csu_main_category", 
-            #   labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (suma)"},
-            #   line_shape="linear", render_mode="webgl")
-            # fig.update_layout(graph_layout)
-            # return fig
-
+from assets.graph_settings import graph_layout
+from functions import generate_time_graph
+from db_connection import conn, select_data
 
 def rc_rohlik_weighted_evo_graph(app):
     @app.callback(Output('rohlik-weighted-graph','figure'),
                     [Input('date-picker-range','start_date'),
                     Input('date-picker-range','end_date')])
     def rohlik_weighted_evo(start_date,end_date):
+        table_name = "rohlik_spotrebni_kos_vazena_suma"
+        y = "vazena_suma"
+        y_label = "Cena na jednotku (suma)"
         if start_date is not None:
             start_date = dt.strptime(start_date,'%Y-%m-%d').date()
         if end_date is not None:
             end_date = dt.strptime(end_date,'%Y-%m-%d').date()
         if start_date is not None and end_date is not None and start_date <= end_date:
-            df = rohlikKosVahy[(rohlikKosVahy['date'] >= start_date) & (rohlikKosVahy['date'] <= end_date)].sort_values(by='date')
-            return generate_time_graph(df,"vazena_suma",None,graph_layout,"Cena spotřebního koše (zvážená)") 
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,None,graph_layout,y_label)
         else:
-            df = rohlikKosVahy.sort_values(by='date')
-            return generate_time_graph(df,"vazena_suma",None,graph_layout,"Cena spotřebního koše (zvážená)") 
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                order by "date"
+                ''' 
+            sql = sql.format(table_name)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,None,graph_layout,y_label)
+
+def rc_rohlik_main_cat_graph(app):
+    @app.callback(Output('rohlik-main-cat-graph','figure'),
+                    [Input('date-picker-range','start_date'),
+                    Input('date-picker-range','end_date')])
+    def rohlik_main_cat_graph_date(start_date,end_date):
+        table_name = "out_rohlik_spotrebni_kos_main_cat_agg"
+        y = "csuRelevantPrice"
+        breakdown = "csu_main_category"
+        y_label = "Cena za jednotku (průměr)"
+        if start_date is not None:
+            start_date = dt.strptime(start_date,'%Y-%m-%d').date()
+        if end_date is not None:
+            end_date = dt.strptime(end_date,'%Y-%m-%d').date()
+        if start_date is not None and end_date is not None and start_date <= end_date:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
+        elif start_date is not None and end_date is not None and start_date > end_date:
+            new_end_date = start_date
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,new_end_date)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
+        else:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                order by "date"
+                ''' 
+            sql = sql.format(table_name)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
 
 def rc_rohlik_sub_cat_graph(app):
     @app.callback(Output('csu-sub-category-graph-rohlik','figure'),
-                    Input('csu-main-category-dropdown-rohlik','value'))
-    def rohlik_main_sub_graph_dropdown(csu_main_category):
-        if csu_main_category is not None:
-            df = rohlikSubCat[rohlikSubCat['csu_main_category']==csu_main_category].sort_values(by='date')
-            return generate_time_graph(df,"csuRelevantPrice","csu_subcategory",graph_layout,"Cena za jednotku (průměr)")
-            # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
-            #     color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            #     line_shape="linear", render_mode="webgl")
-            # fig.update_layout({"margin":{"t":25,"l":50},
-            #                     "legend_orientation":"h",
-            #                     'plot_bgcolor': 'rgba(0,0,0,0)'})
-            # return fig
-        else:
-            df = rohlikSubCat.sort_values(by='date')
-            return generate_time_graph(df,"csuRelevantPrice","csu_subcategory",graph_layout,"Cena za jednotku (průměr)")
-            # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
-            #     color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            #     line_shape="linear", render_mode="webgl")
-            # fig.update_layout({"margin":{"t":25,"l":50},
-            #                     "legend_orientation":"h",
-            #                     'plot_bgcolor': 'rgba(0,0,0,0)'})
-            # return fig
+                    [Input('csu-main-category-dropdown-rohlik','value'),
+                    Input('date-picker-range','start_date'),
+                    Input('date-picker-range','end_date')])
+    def rohlik_main_sub_graph_dropdown(csu_main_category,start_date,end_date):
+        table_name = "out_rohlik_spotrebni_kos_sub_cat_agg"
+        y = "csuRelevantPrice"
+        breakdown = "csu_subcategory"
+        y_label = "Cena na jednotku (průměr)"
 
+        if start_date is not None:
+            start_date = dt.strptime(start_date,'%Y-%m-%d').date()
+        if end_date is not None:
+            end_date = dt.strptime(end_date,'%Y-%m-%d').date()
+
+        if start_date is not None and end_date is not None and csu_main_category is not None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                and "csu_main_category" = '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date,csu_main_category)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
+        if start_date is None and end_date is None and csu_main_category is not None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "csu_main_category" = '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,csu_main_category)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
+        if start_date is not None and end_date is not None and csu_main_category is None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
+        else:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                order by "date"
+                ''' 
+            sql = sql.format(table_name)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
 
 def rc_rohlik_product_graph(app):
     @app.callback(Output('csu-product-graph-rohlik','figure'),
-                    Input('csu-sub-category-dropdown-rohlik','value'))
-    def product_graph_dropdown(csu_subcategory):
-        if csu_subcategory is not None:
-            df = rohlikProduct[rohlikProduct['csu_subcategory']==csu_subcategory].sort_values(by='date')
-            return generate_time_graph(df,"csuRelevantPrice","csu_product",graph_layout,"Cena za jednotku (průměr)")
-            # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-            #     color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            #     line_shape="linear", render_mode="webgl")
-            # fig.update_layout({"margin":{"t":25,"l":50},
-            #                     "legend_orientation":"h",
-            #                     'plot_bgcolor': 'rgba(0,0,0,0)'})
-            # return fig
+                    [Input('csu-sub-category-dropdown-rohlik','value'),
+                    Input('date-picker-range','start_date'),
+                    Input('date-picker-range','end_date')])
+    def product_graph_dropdown(csu_subcategory,start_date,end_date):
+
+        table_name = "out_rohlik_spotrebni_kos_product_agg"
+        y = "csuRelevantPrice"
+        breakdown = "csu_product"
+        y_label = "Cena na jednotku (průměr)"
+
+        if start_date is not None:
+            start_date = dt.strptime(start_date,'%Y-%m-%d').date()
+        if end_date is not None:
+            end_date = dt.strptime(end_date,'%Y-%m-%d').date()
+
+        if start_date is not None and end_date is not None and csu_subcategory is not None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                and "csu_subcategory" = '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date,csu_subcategory)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
+        if start_date is None and end_date is None and csu_subcategory is not None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "csu_subcategory" = '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,csu_subcategory)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
+        if start_date is not None and end_date is not None and csu_subcategory is None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
         else:
-            df = rohlikProduct.sort_values(by='date')
-            return generate_time_graph(df,"csuRelevantPrice","csu_product",graph_layout,"Cena za jednotku (průměr)")
-            # fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-            #     color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            #     line_shape="linear", render_mode="webgl")
-            # fig.update_layout({"margin":{"t":25,"l":50},
-            #                     "legend_orientation":"h",
-            #                     'plot_bgcolor': 'rgba(0,0,0,0)'})
-            # return fig
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                order by "date"
+                ''' 
+            sql = sql.format(table_name)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
 
 # ## not used right now - the graph is illegible when not filtered
 # def rc_rohlik_drilldown_sub(app):

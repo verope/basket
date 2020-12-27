@@ -41,57 +41,6 @@ def select_data(conn,sql):
 # DATA LOAD
 
 ##################
-# ROHLIK
-##################
-
-# out_rohlik_spotrebni_kos_main_cat_agg
-# out_rohlik_spotrebni_kos_sub_cat_agg
-# out_rohlik_spotrebni_kos_product_agg
-# out_rohlik_spotrebni_kos_item_agg
-
-try:
-    sql = 'select * from WORKSPACE_179647280."rohlik_spotrebni_kos_vazena_suma"'
-    cursor = conn.cursor()
-    cursor.execute(sql)
-    rohlikKosVahy = pd.DataFrame.from_records(
-        iter(cursor), columns=[x[0]for x in cursor.description])
-    cursor.close()
-except Exception as e:
-    print(e)
-
-try:
-    sql = 'select * from WORKSPACE_179647280."out_rohlik_spotrebni_kos_main_cat_agg"'
-    cursor = conn.cursor()
-    cursor.execute(sql)
-    rohlikMainCat = pd.DataFrame.from_records(
-        iter(cursor), columns=[x[0]for x in cursor.description])
-    cursor.close()
-except Exception as e:
-    print(e)
-
-try:
-    sql = 'select * from WORKSPACE_179647280."out_rohlik_spotrebni_kos_sub_cat_agg"'
-    cursor = conn.cursor()
-    cursor.execute(sql)
-    rohlikSubCat = pd.DataFrame.from_records(
-        iter(cursor), columns=[x[0]for x in cursor.description])
-    cursor.close()
-except Exception as e:
-    print(e)
-
-try:
-    sql = 'select * from WORKSPACE_179647280."out_rohlik_spotrebni_kos_product_agg"'
-    cursor = conn.cursor()
-    cursor.execute(sql)
-    rohlikProduct = pd.DataFrame.from_records(
-        iter(cursor), columns=[x[0]for x in cursor.description])
-    cursor.close()
-except Exception as e:
-    print(e)
-
-
-
-##################
 # KOSIK
 ##################
 
