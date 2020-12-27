@@ -102,7 +102,7 @@ def rc_itesco_sub_cat_graph(app):
             sql = '''
                 select * 
                 from WORKSPACE_179647280."{}" 
-                and "csu_main_category" = '{}'
+                where "csu_main_category" = '{}'
                 order by "date"
                 ''' 
             sql = sql.format(table_name,csu_main_category)
@@ -158,7 +158,7 @@ def rc_itesco_product_graph(app):
             sql = '''
                 select * 
                 from WORKSPACE_179647280."{}" 
-                and "csu_subcategory" = '{}'
+                where "csu_subcategory" = '{}'
                 order by "date"
                 ''' 
             sql = sql.format(table_name,csu_subcategory)
