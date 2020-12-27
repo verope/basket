@@ -1,9 +1,13 @@
 import dash_html_components as html
 import dash_core_components as dcc
-import plotly.express as px
+from db_connection import conn, select_data
 
-from db_connection import kosikSubCat as df
-# the chart will be based on main categories
+sql = '''
+    select distinct "csu_main_category" 
+    from WORKSPACE_179647280."out_kosik_spotrebni_kos_sub_cat_agg"
+'''
+
+df = select_data(conn,sql)
 
 col_options = [dict(label=x,value=x,title='Hlavní kategorie') for x in df['csu_main_category'].unique()]
 
