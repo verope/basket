@@ -31,13 +31,13 @@ layout = html.Div(
                 ], className="homepage__hero-image")
             ], className="homepage__hero-container")
         ], className="homepage__hero"),
-        html.Hr(className="homepage__divider"),
-        html.Div([
-            html.H1('eSPOKO', className="homepage__hero-heading"),
-            html.H3('Interaktivní tool pro sledování vývoje cen potravin v eshopech s výběrem produktů'),
-            html.P(o_projektu.subtitle, className="homepage__hero-paragraph"),
-            html.A('UKÁZKY', className="homepage__hero-showcase-link", href="/showcase"),
-        ], className="homepage__hero"),
+        # html.Hr(className="homepage__divider"),
+        # html.Div([
+        #     html.H1('eSPOKO', className="homepage__hero-heading"),
+        #     html.H3('Interaktivní tool pro sledování vývoje cen potravin v eshopech s výběrem produktů'),
+        #     html.P(o_projektu.subtitle, className="homepage__hero-paragraph"),
+        #     html.A('UKÁZKY', className="homepage__hero-showcase-link", href="/showcase"),
+        # ], className="homepage__hero"),
         html.Hr(className="homepage__divider"),
         html.H2('Vizualizace pro jednotlivé eshopy', className="homepage__box-heading"),
         html.H4('Klikněte na logo eshopu pro zobrazení interaktivního toolu'),
