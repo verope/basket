@@ -41,7 +41,7 @@ def display_page(pathname):
     elif pathname == '/rohlik':
         return rohlik_page.layout
     elif pathname == '/kosik':
-        return kosik_page.layout # --> add!
+        return kosik_page.layout
     else:
         return '404'
 
@@ -80,4 +80,3 @@ rc_kosik_product_graph(app)
 if __name__ == '__main__':
     # app.run_server(debug=True,host='127.0.0.1',port = 8050)
     app.run_server(debug=False)
-    # server debug does not work -> fix!

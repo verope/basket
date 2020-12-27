@@ -3,7 +3,27 @@ import dash_html_components as html
 import dash_core_components as dcc
 import plotly.express as px
 
-from db_connection import okurkyDf as df
+from db_connection import conn, select_data
+from assets.graph_settings import graph_layout
+from functions import generate_time_graph
+
+table_name = "out_rohlik_spotrebni_kos_item_agg"
+product_name = "Okurky salátové"
+
+sql = """
+    SELECT * 
+    FROM WORKSPACE_179647280."{}" 
+    WHERE "csu_product" = '{}'
+    ORDER BY "date"
+"""
+sql = sql.format(table_name,product_name)
+
+df = select_data(conn,sql)
+y = "csuRelevantPrice"
+breakdown = "itemName"
+y_label = "Cena na jednotku"
+
+fig = generate_time_graph(df,y,breakdown,graph_layout,y_label)
 
 product = 'Okurky salátové'
 
@@ -11,19 +31,6 @@ popisek = '''
 Sledovaly jsme také vývoj cen u konkrétních produktů v návaznosti na světové události, které by na jejich ceny mohly mít vliv. Například jsme tak zjistily, že cena okurek, které se k nám dováží ze Španělska, stoupla v únoru, což odpovídá době kdy se Španělskem prohnala bouřka Glorie, která poničila velkou část úrody. 
 Zdroj: rohlik.cz
 '''
-
-df = df.sort_values(by='date')
-fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="itemName",
-              color="itemName", 
-              labels = {"itemName":'',"date":'',"csuRelevantPrice":"Cena na jednotku"},
-              line_shape="linear", render_mode="webgl")
-
-fig.update_layout({
-    'plot_bgcolor': 'rgba(0,0,0,0)',
-    'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-    "legend_orientation":"h",
-    "margin":{"t":25,"l":50,"b":25}
-})
 
 graph = html.Div(children = [
     html.H2("Vývoj ceny za jednotku"),
