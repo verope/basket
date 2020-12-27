@@ -7,6 +7,29 @@
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+.homepage__hero-container {
+  width: 100%;
+  display: flex;
+  min-height: 450px;
+  margin: 10px 0;
+}
+
+.homepage__hero-text {
+  width: 100%;
+  max-width: 65%;
+  flex-shrink: 0;
+  /* padding: 2vmin; */
+  background: #f5f5f5;
+}
+.homepage__hero-image {
+  width: 100%;
+  max-width: 55%;
+  flex-shrink: 0;
+  padding: 2vmin; 
+}
+
+
+
 .homepage__hero-heading {
   font-size: 75px;
   font-weight: 700;

@@ -9,9 +9,29 @@ from app import app
 from layout.navbar import navbar
 from assets import o_projektu
 
+import base64
+# assets/basket_illustration_transparent.png
+image_filename = 'assets/basket_illustration_edited.png'
+encoded_image = base64.b64encode(open(image_filename,'rb').read())
+
 layout = html.Div(
     [
         navbar,
+        html.Div([
+            html.Div([
+
+                html.Div([
+                    html.H1('eSPOKO', className="homepage__hero-heading"),
+                    html.H3('Interaktivní tool pro sledování vývoje cen potravin v eshopech s výběrem produktů'),
+                    html.P(o_projektu.subtitle, className="homepage__hero-paragraph"),
+                    html.A('UKÁZKY', className="homepage__hero-showcase-link", href="/showcase"),
+                ], className="homepage__hero-text"),
+                html.Div([
+                    html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()))
+                ], className="homepage__hero-image")
+            ], className="homepage__hero-container")
+        ], className="homepage__hero"),
+        html.Hr(className="homepage__divider"),
         html.Div([
             html.H1('eSPOKO', className="homepage__hero-heading"),
             html.H3('Interaktivní tool pro sledování vývoje cen potravin v eshopech s výběrem produktů'),

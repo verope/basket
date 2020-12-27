@@ -46,24 +46,26 @@ def display_page(pathname):
         return '404'
 
 from callbacks.itesco_page import rc_itesco_weighted_evo_graph
-from callbacks.itesco_page import rc_itesco_main_cat_graph2
-from callbacks.itesco_page import rc_itesco_drilldown_sub
-from callbacks.itesco_page import rc_itesco_main_cat_graph_agg
-from callbacks.itesco_page import rc_itesco_product_graph_dropdown
+from callbacks.itesco_page import rc_itesco_sub_cat_graph
+# from callbacks.itesco_page import rc_itesco_drilldown_sub
+from callbacks.itesco_page import rc_itesco_main_cat_graph
+from callbacks.itesco_page import rc_itesco_product_graph
+
 from callbacks.rohlik_page import rc_rohlik_main_cat_graph
 from callbacks.rohlik_page import rc_rohlik_sub_cat_graph
 from callbacks.rohlik_page import rc_rohlik_product_graph
 from callbacks.rohlik_page import rc_rohlik_weighted_evo_graph
+
 from callbacks.kosik_page import rc_kosik_main_cat_graph
 from callbacks.kosik_page import rc_kosik_sub_cat_graph
 from callbacks.kosik_page import rc_kosik_product_graph
 from callbacks.kosik_page import rc_kosik_weighted_evo_graph
 
 rc_itesco_weighted_evo_graph(app)
-rc_itesco_main_cat_graph2(app)
+rc_itesco_sub_cat_graph(app)
 # rc_itesco_drilldown_sub(app)
-rc_itesco_main_cat_graph_agg(app)
-rc_itesco_product_graph_dropdown(app)
+rc_itesco_main_cat_graph(app)
+rc_itesco_product_graph(app)
 
 rc_rohlik_weighted_evo_graph(app)
 rc_rohlik_main_cat_graph(app)

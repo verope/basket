@@ -1,155 +1,212 @@
-# from graphs.itesco_weighted_evo import layout as layout_itesco_weighted_evo
-from db_connection import itescoWeighted_s
-from db_connection import itescoProductDf
-from db_connection import itescoMainCatDf_agg
-
 from datetime import datetime as dt
 import datetime
-import plotly.graph_objs as go
 import plotly.express as px
-import json
-
 from dash.dependencies import Input, Output
-from app import app
 
-from db_connection import itescoSubCatDf
+from functions import generate_time_graph
+from db_connection import conn, select_data
+from assets.graph_settings import graph_layout
 
-
-def rc_itesco_main_cat_graph_agg(app):
+def rc_itesco_main_cat_graph(app):
     @app.callback(Output('itesco-main-cat-graph-agg','figure'),
                     [Input('date-picker-range','start_date'),
                     Input('date-picker-range','end_date')])
     def callback_itesco_main_cat_graph_agg(start_date,end_date):
+        table_name = "out_itesco_spotrebni_kos_main_cat_agg"
         if start_date is not None:
             start_date = dt.strptime(start_date,'%Y-%m-%d').date()
         if end_date is not None:
             end_date = dt.strptime(end_date,'%Y-%m-%d').date()
         if start_date is not None and end_date is not None:
-            df = itescoMainCatDf_agg[(itescoMainCatDf_agg['date'] >= start_date) & (itescoMainCatDf_agg['date'] <= end_date)].sort_values(by='date')
-            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
-              color="csu_main_category", 
-              labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (suma)"},
-              line_shape="linear", render_mode="webgl")
-            fig.update_layout({
-                'plot_bgcolor': 'rgba(0,0,0,0)',
-                "legend_orientation":"h",
-                "margin":{"t":25,"l":50,"b":25}
-            })
-            return fig
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date)
+            df = select_data(conn,sql)
+            y = "csuRelevantPrice"
+            breakdown = "csu_main_category"
+            y_label = "Cena na jednotku (suma)"
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
         else:
-            df = itescoMainCatDf_agg.sort_values(by='date')
-            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_main_category",
-              color="csu_main_category", 
-              labels = {"csu_main_category":'',"date":'',"csuRelevantPrice":"Cena na jednotku (suma)"},
-              line_shape="linear", render_mode="webgl")
-            fig.update_layout({
-                'plot_bgcolor': 'rgba(0,0,0,0)',
-                "legend_orientation":"h",
-                "margin":{"t":25,"l":50,"b":25}
-            })
-            return fig
-
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                order by "date"
+                ''' 
+            sql = sql.format(table_name)
+            df = select_data(conn,sql)
+            y = "csuRelevantPrice"
+            breakdown = "csu_main_category"
+            y_label = "Cena na jednotku (suma)"
+            return generate_time_graph(df,y,breakdown,graph_layout,y_label)
 
 def rc_itesco_weighted_evo_graph(app):
     @app.callback(Output('itesco-weighted-graph','figure'),
                     [Input('date-picker-range','start_date'),
                     Input('date-picker-range','end_date')])
     def callback_itesco_weighted_evo(start_date,end_date):
+        table_name = "itesco_spotrebni_kos_vazena_suma"
         if start_date is not None:
             start_date = dt.strptime(start_date,'%Y-%m-%d').date()
         if end_date is not None:
             end_date = dt.strptime(end_date,'%Y-%m-%d').date()
         if start_date is not None and end_date is not None:
-            df = itescoWeighted_s[(itescoWeighted_s['date'] >= start_date) & (itescoWeighted_s['date'] <= end_date)].sort_values(by='date')
-            fig = px.line(df, x="date", y="vazena_suma", hover_name="vazena_suma",
-              labels= {"vazena_suma":"Cena spotřebního koše (zvážená)","date":""},
-              line_shape="linear", render_mode="webgl")
-            fig.update_layout({
-                'plot_bgcolor': 'rgba(0,0,0,0)',
-                "legend_orientation":"h",
-                "margin":{"t":25,"l":50,"b":25}
-            })
-            return fig
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"vazena_suma",None,graph_layout,"Cena spotřebního koše (zvážená)")
         else:
-            df = itescoWeighted_s.sort_values(by='date')
-            fig = px.line(df, x="date", y="vazena_suma", hover_name="vazena_suma",
-              labels= {"vazena_suma":"Cena spotřebního koše (zvážená)","date":""},
-              line_shape="linear", render_mode="webgl")
-            fig.update_layout({
-                'plot_bgcolor': 'rgba(0,0,0,0)',
-                "legend_orientation":"h",
-                "margin":{"t":25,"l":50,"b":25}
-            })
-            return fig
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}"
+                order by "date"
+                ''' 
+            sql = sql.format(table_name)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"vazena_suma",None,graph_layout,"Cena spotřebního koše (zvážená)")
 
-def rc_itesco_main_cat_graph2(app):
+def rc_itesco_sub_cat_graph(app):
     @app.callback(Output('csu-sub-category-graph','figure'),
-                    Input('csu-main-category-dropdown','value'))
-    def callback_itesco_main_cat_graph2(csu_main_category):
-        if csu_main_category is not None:
-            df_sub_category = itescoSubCatDf[itescoSubCatDf['csu_main_category']==csu_main_category].sort_values(by='date')
-            fig = px.line(df_sub_category, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
-                color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-                line_shape="linear", render_mode="webgl")
-            fig.update_layout({"margin":{"t":25,"l":50},
-                                "legend_orientation":"h",
-                                'plot_bgcolor': 'rgba(0,0,0,0)'})
-            return fig
+                    [Input('csu-main-category-dropdown','value'),
+                    Input('date-picker-range','start_date'),
+                    Input('date-picker-range','end_date')])
+    def callback_itesco_sub_cat_graph(csu_main_category,start_date,end_date):
+        table_name = "out_itesco_spotrebni_kos_sub_cat_agg"
+        if start_date is not None:
+            start_date = dt.strptime(start_date,'%Y-%m-%d').date()
+        if end_date is not None:
+            end_date = dt.strptime(end_date,'%Y-%m-%d').date()
+        if start_date is not None and end_date is not None and csu_main_category is not None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                and "csu_main_category" = '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date,csu_main_category)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"csuRelevantPrice","csu_subcategory",graph_layout,"Cena na jednotku (průměr)")
+        if start_date is None and end_date is None and csu_main_category is not None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                and "csu_main_category" = '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,csu_main_category)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"csuRelevantPrice","csu_subcategory",graph_layout,"Cena na jednotku (průměr)")
+        if start_date is not None and end_date is not None and csu_main_category is None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"csuRelevantPrice","csu_subcategory",graph_layout,"Cena na jednotku (průměr)")
+        
         else:
-            df_sub_category = itescoSubCatDf.sort_values(by='date')
-            fig = px.line(df_sub_category, x="date", y="csuRelevantPrice", hover_name="csu_subcategory",
-                color="csu_subcategory", labels={"csu_subcategory":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-                line_shape="linear", render_mode="webgl")
-            fig.update_layout({"margin":{"t":25,"l":50},
-                                "legend_orientation":"h",
-                                'plot_bgcolor': 'rgba(0,0,0,0)'})
-            return fig
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                order by "date"
+                ''' 
+            sql = sql.format(table_name)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"csuRelevantPrice","csu_subcategory",graph_layout,"Cena na jednotku (průměr)")
 
 
-def rc_itesco_product_graph_dropdown(app):
+def rc_itesco_product_graph(app):
     @app.callback(Output('csu-product-graph','figure'),
-                    Input('csu-sub-category-dropdown','value'))
-    def callback_product_dropdown(csu_subcategory):
-        if csu_subcategory is not None:
-            df = itescoProductDf[itescoProductDf['csu_subcategory']==csu_subcategory].sort_values(by='date')
-            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-                color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-                line_shape="linear", render_mode="webgl")
-            fig.update_layout({"margin":{"t":25,"l":50},
-                                "legend_orientation":"h",
-                                'plot_bgcolor': 'rgba(0,0,0,0)'})
-            return fig
+                    [Input('csu-sub-category-dropdown','value'),
+                    Input('date-picker-range','start_date'),
+                    Input('date-picker-range','end_date')])
+    def callback_itesco_product_graph(csu_subcategory,start_date,end_date):
+        table_name = "out_itesco_spotrebni_kos_product_agg"
+        if start_date is not None:
+            start_date = dt.strptime(start_date,'%Y-%m-%d').date()
+        if end_date is not None:
+            end_date = dt.strptime(end_date,'%Y-%m-%d').date()
+        if start_date is not None and end_date is not None and csu_subcategory is not None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                and "csu_subcategory" = '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date,csu_subcategory)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"csuRelevantPrice","csu_product",graph_layout,"Cena na jednotku (průměr)")
+        if start_date is None and end_date is None and csu_subcategory is not None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                and "csu_subcategory" = '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,csu_subcategory)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"csuRelevantPrice","csu_product",graph_layout,"Cena na jednotku (průměr)")
+        if start_date is not None and end_date is not None and csu_subcategory is None:
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                where "date" >= '{}'
+                and "date" <= '{}'
+                order by "date"
+                ''' 
+            sql = sql.format(table_name,start_date,end_date)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"csuRelevantPrice","csu_product",graph_layout,"Cena na jednotku (průměr)")
+        
         else:
-            df = itescoProductDf.sort_values(by='date')
-            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-                color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-                line_shape="linear", render_mode="webgl")
-            fig.update_layout({"margin":{"t":25,"l":50},
-                                "legend_orientation":"h",
-                                'plot_bgcolor': 'rgba(0,0,0,0)'})
-            return fig
+            sql = '''
+                select * 
+                from WORKSPACE_179647280."{}" 
+                order by "date"
+                ''' 
+            sql = sql.format(table_name)
+            df = select_data(conn,sql)
+            return generate_time_graph(df,"csuRelevantPrice","csu_product",graph_layout,"Cena na jednotku (průměr)")
 
 ## not used right now - the graph is illegible when not filtered
-def rc_itesco_drilldown_sub(app):
-    @app.callback(Output('csu-product-graph','figure'),
-                    Input('csu-sub-category-graph','hoverData'))
-    def callback_itesco_drilldown_sub(hoverData):
-        if hoverData is not None:
-            filter_value = hoverData['points'][0]['hovertext']
-            df = itescoProductDf[itescoProductDf['csu_subcategory']==filter_value].sort_values(by='date')
-            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-            color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            line_shape="linear", render_mode="webgl")
-            fig.update_layout({"margin":{"t":25,"l":50},
-                                "legend_orientation":"h",
-                                'plot_bgcolor': 'rgba(0,0,0,0)'})
-            return fig
-        else:
-            df = itescoProductDf.sort_values(by='date')
-            fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
-            color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
-            line_shape="linear", render_mode="webgl")
-            fig.update_layout({"margin":{"t":25,"l":50},
-                                "legend_orientation":"h",
-                                'plot_bgcolor': 'rgba(0,0,0,0)'})
-            return fig
+# def rc_itesco_drilldown_sub(app):
+#     @app.callback(Output('csu-product-graph','figure'),
+#                     Input('csu-sub-category-graph','hoverData'))
+#     def callback_itesco_drilldown_sub(hoverData):
+#         if hoverData is not None:
+#             filter_value = hoverData['points'][0]['hovertext']
+#             df = itescoProductDf[itescoProductDf['csu_subcategory']==filter_value].sort_values(by='date')
+#             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
+#             color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
+#             line_shape="linear", render_mode="webgl")
+#             fig.update_layout({"margin":{"t":25,"l":50},
+#                                 "legend_orientation":"h",
+#                                 'plot_bgcolor': 'rgba(0,0,0,0)'})
+#             return fig
+#         else:
+#             df = itescoProductDf.sort_values(by='date')
+#             fig = px.line(df, x="date", y="csuRelevantPrice", hover_name="csu_product",
+#             color="csu_product", labels={"csu_product":'', "date": '', "csuRelevantPrice": "Cena na jednotku (průměr)"},
+#             line_shape="linear", render_mode="webgl")
+#             fig.update_layout({"margin":{"t":25,"l":50},
+#                                 "legend_orientation":"h",
+#                                 'plot_bgcolor': 'rgba(0,0,0,0)'})
+#             return fig
