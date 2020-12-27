@@ -11,7 +11,7 @@ from assets import o_projektu
 
 import base64
 # assets/basket_illustration_transparent.png
-image_filename = 'assets/basket_illustration_edited.png'
+image_filename = 'assets/basket_illustration_transparent_small.png'
 encoded_image = base64.b64encode(open(image_filename,'rb').read())
 
 layout = html.Div(
