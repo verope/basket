@@ -8,7 +8,8 @@ date_range_picker = html.Div(
         html.P('Select Date Range:'),
         dcc.DatePickerRange(
             id='date-picker-range',
-            start_date=dt.strptime('2019-07-25','%Y-%m-%d').date(),
+            # start_date=dt.strptime('2019-07-25','%Y-%m-%d').date(),
+            start_date=dt.now().date() - datetime.timedelta(days=366),
             end_date=dt.now().date() - datetime.timedelta(days=1),
             clearable=True,
             display_format="MMM DD, YYYY",
