@@ -26,7 +26,7 @@ from db_connection import conn
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    html.Div(id='page-content'),
+    html.Div(id='page-content')
 ])
 
 @app.callback(Output('page-content', 'children'),
