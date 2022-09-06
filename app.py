@@ -8,6 +8,7 @@ import plotly.graph_objs as go
 import dash_bootstrap_components as dbc
 
 # app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+# I just need a commit and push. Don't we all.
 
 app = dash.Dash(__name__) 
 app.title = 'Online spotřební koš'
