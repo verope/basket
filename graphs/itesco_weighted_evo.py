@@ -1,8 +1,8 @@
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 
-graph = html.Div(children = [
+graph = html.Div(children=[
     html.H2("iTesco: Cena spotřebního koše"),
     dcc.Graph(id="itesco-weighted-graph",
-            figure={})
+              figure={})
 ], className="graph-cell")

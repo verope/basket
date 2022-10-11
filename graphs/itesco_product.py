@@ -1,6 +1,6 @@
 import dash
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import html
+from dash import dcc
 import plotly.express as px
 
 # from db_connection import itescoSubCatDf as df
@@ -12,13 +12,15 @@ sql = '''
     from WORKSPACE_179647280."out_itesco_spotrebni_kos_sub_cat_agg"
 '''
 
-df = select_data(conn,sql)
+df = select_data(conn, sql)
 
-col_options = [dict(label=x,value=x,title='Podkategorie') for x in df['csu_subcategory'].unique()]
+col_options = [dict(label=x, value=x, title='Podkategorie')
+               for x in df['csu_subcategory'].unique()]
 
-graph = html.Div(children = [
+graph = html.Div(children=[
     html.H2("iTesco: ČSÚ produkt"),
-    html.P("Vyberte ČSÚ podkategorii:",className="dropdown-title"),
-    dcc.Dropdown(id='csu-sub-category-dropdown',value='Drůbež',options=col_options),
-    dcc.Graph(id="csu-product-graph",figure={})
+    html.P("Vyberte ČSÚ podkategorii:", className="dropdown-title"),
+    dcc.Dropdown(id='csu-sub-category-dropdown',
+                 value='Drůbež', options=col_options),
+    dcc.Graph(id="csu-product-graph", figure={})
 ], className="graph-cell")

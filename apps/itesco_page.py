@@ -1,19 +1,17 @@
+from layout.navbar import navbar
+from graphs.itesco_product import graph as graph4
+from graphs.itesco_sub_category import graph as graph3
+from graphs.itesco_main_category import graph as graph2
+from graphs.itesco_weighted_evo import graph as graph1
+from layout.datepicker import datepicker
+from app import app
 import sys
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 from dash.dependencies import Input, Output
 
-sys.path.append("..") # Adds higher directory to python modules path.
+sys.path.append("..")  # Adds higher directory to python modules path.
 
-from app import app
-from layout.datepicker import datepicker
-
-from graphs.itesco_weighted_evo import graph as graph1
-from graphs.itesco_main_category import graph as graph2
-from graphs.itesco_sub_category import graph as graph3
-from graphs.itesco_product import graph as graph4
-
-from layout.navbar import navbar
 
 layout = html.Div(
     [

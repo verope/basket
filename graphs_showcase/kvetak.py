@@ -1,6 +1,6 @@
 # KVETAK
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import html
+from dash import dcc
 from db_connection import conn, select_data
 from assets.graph_settings import graph_layout
 from functions import generate_time_graph
@@ -15,14 +15,14 @@ sql = """
     WHERE "{}" = '{}'
     ORDER BY "date"
 """
-sql = sql.format(table_name,category,name)
+sql = sql.format(table_name, category, name)
 
-df = select_data(conn,sql)
+df = select_data(conn, sql)
 y = "csuRelevantPrice"
 breakdown = "itemName"
 y_label = "Cena na jednotku"
 
-fig = generate_time_graph(df,y,breakdown,graph_layout,y_label)
+fig = generate_time_graph(df, y, breakdown, graph_layout, y_label)
 
 popisek = '''
 Dále jsme zjistily, že během první vlny koronakrize vzrostla cena květáku. To může být způsobeno tím, že květák se dováží z Francie, do které se kvůli protipandemickým opatřením nemohli dostat zahraniční pracovníci provádějící sklizeň. Stoupla tak cena za práci při sklizni a v důsledku stouply i ceny květáku.
@@ -30,8 +30,8 @@ Zdroj: rohlik.cz
 '''
 product = 'Květák bílý celý'
 
-graph = html.Div(children = [
+graph = html.Div(children=[
     html.H2("Vývoj ceny za jednotku"),
     dcc.Graph(id="showcase-graph-cauliflower",
-            figure=fig)
+              figure=fig)
 ], className="graph-cell")
