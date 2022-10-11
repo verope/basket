@@ -1,6 +1,6 @@
 # OKURKA HADOVKA
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import html
+from dash import dcc
 import plotly.express as px
 
 from db_connection import conn, select_data
@@ -16,14 +16,14 @@ sql = """
     WHERE "csu_product" = '{}'
     ORDER BY "date"
 """
-sql = sql.format(table_name,product_name)
+sql = sql.format(table_name, product_name)
 
-df = select_data(conn,sql)
+df = select_data(conn, sql)
 y = "csuRelevantPrice"
 breakdown = "itemName"
 y_label = "Cena na jednotku"
 
-fig = generate_time_graph(df,y,breakdown,graph_layout,y_label)
+fig = generate_time_graph(df, y, breakdown, graph_layout, y_label)
 
 product = 'Okurky salátové'
 
@@ -32,8 +32,8 @@ Sledovaly jsme také vývoj cen u konkrétních produktů v návaznosti na svět
 Zdroj: rohlik.cz
 '''
 
-graph = html.Div(children = [
+graph = html.Div(children=[
     html.H2("Vývoj ceny za jednotku"),
     dcc.Graph(id="showcase-graph-cucumber",
-            figure=fig)
+              figure=fig)
 ], className="graph-cell")

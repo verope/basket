@@ -1,6 +1,6 @@
 # VEPROVE
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import html
+from dash import dcc
 
 from db_connection import conn, select_data
 from assets.graph_settings import graph_layout
@@ -16,14 +16,14 @@ sql = """
     WHERE "{}" = '{}'
     ORDER BY "date"
 """
-sql = sql.format(table_name,category,name)
+sql = sql.format(table_name, category, name)
 
-df = select_data(conn,sql)
+df = select_data(conn, sql)
 y = "csuRelevantPrice"
 breakdown = "csu_subcategory"
 y_label = "Cena na jednotku"
 
-fig = generate_time_graph(df,y,breakdown,graph_layout,y_label)
+fig = generate_time_graph(df, y, breakdown, graph_layout, y_label)
 
 product = 'Vepřové maso'
 
@@ -32,8 +32,8 @@ Vývoj vepřového masa byl hned několikrát ovlivněn prasečím morem — pop
 Zdroj: rohlik.cz
 '''
 
-graph = html.Div(children = [
+graph = html.Div(children=[
     html.H2("Vývoj ceny za jednotku"),
     dcc.Graph(id="showcase-graph-pork",
-            figure=fig)
+              figure=fig)
 ], className="graph-cell")

@@ -1,10 +1,10 @@
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import datetime
 from datetime import datetime as dt
 
 date_range_picker = html.Div(
-    [   
+    [
         html.P('Select Date Range:'),
         dcc.DatePickerRange(
             id='date-picker-range',
