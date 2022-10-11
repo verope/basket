@@ -41,6 +41,11 @@ app.layout = html.Div([
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
+    from apps import homepage
+    from apps import showcase_page
+    from apps import itesco_page
+    from apps import rohlik_page
+    from apps import kosik_page
     if pathname == '/':
         return homepage.layout
     elif pathname == '/showcase':
